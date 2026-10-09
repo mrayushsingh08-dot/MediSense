@@ -8,7 +8,9 @@ The project demonstrates how machine learning can be applied to healthcare infor
 
 > **Disclaimer:** MediSense is an educational project and is not a substitute for professional medical advice, diagnosis, or treatment.
 
----
+## 🌐 Live Demo
+
+**Live Website:** https://medisenseofficials.vercel.app/
 
 ## ✨ Key Features
 
@@ -25,7 +27,7 @@ The project demonstrates how machine learning can be applied to healthcare infor
 * Develop a machine learning-based system for symptom analysis and disease prediction.
 * Provide relevant healthcare information through a simple web interface.
 * Demonstrate the practical application of machine learning in healthcare.
-* Improve the accessibility and presentation of personalized health-related information.
+* Improve the accessibility and presentation of health-related information.
 
 ## 🛠️ Technology Stack
 
@@ -41,60 +43,70 @@ The project demonstrates how machine learning can be applied to healthcare infor
 | NumPy            | Numerical operations                    |
 | Jupyter Notebook | Data analysis and model experimentation |
 
-*Adjust this list to match the libraries and technologies actually used in your project.*
-
 ## ⚙️ How It Works
 
-1. **Input Symptoms:** The user selects or enters symptoms through the web interface.
+1. **Input Symptoms:** The user selects symptoms through the web interface.
 2. **Data Processing:** The application converts the selected symptoms into the format expected by the trained model.
 3. **Disease Prediction:** The machine learning model predicts a potential disease based on the input features.
-4. **Information Retrieval:** The application retrieves the relevant healthcare information associated with the prediction.
-5. **Display Results:** The results and available recommendations are displayed to the user.
+4. **Information Retrieval:** The application retrieves relevant healthcare information associated with the prediction.
+5. **Display Results:** The prediction and available recommendations are displayed to the user.
 
 ## 🔬 Methodology
 
-* **Data Collection:** Use a symptom and disease dataset suitable for the intended prediction task.
+* **Data Collection:** Use a symptom and disease dataset suitable for the prediction task.
 * **Data Preprocessing:** Clean and transform the dataset into a format suitable for model training.
-* **Model Training:** Train and evaluate an appropriate machine learning classification model.
+* **Model Training:** Train and evaluate a machine learning classification model.
 * **Prediction and Integration:** Integrate the trained model with the Flask application to process user inputs and display results.
 
 ## 📁 Project Structure
 
 ```text
 MediSense/
-├── templates/
-│   ├── index.html
-│   ├── about.html
-│   ├── contact.html
-│   └── blog.html
+├── datasets/
+│   ├── description.csv
+│   ├── diets.csv
+│   ├── medications.csv
+│   ├── precautions_df.csv
+│   ├── symptoms_df.csv
+│   ├── workout_df.csv
+│   └── Training.csv
+├── models/
+│   └── svc.pkl
 ├── static/
 │   ├── css/
 │   ├── js/
 │   └── images/
-├── models/
-│   └── trained_model.pkl
-├── datasets/
-│   └── dataset.csv
+├── templates/
+│   ├── index.html
+│   ├── about.html
+│   ├── contact.html
+│   ├── docmeet.html
+│   ├── blog.html
+│   ├── navbar.html
+│   └── footer.html
+├── main.py
 ├── app.py
 ├── requirements.txt
 ├── .gitignore
-└── README.md
+├── README.md
+├── Medicine Recommendation System.ipynb
+└── svc.pkl
 ```
 
-*This is an illustrative structure. Update the filenames and folders to match your actual repository.*
+*Note: The structure above represents the main project files. Some folders and filenames may vary as the project evolves.*
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-* Python 3.10 or another version supported by your dependencies
+* Python 3.11
 * pip package manager
 * Git
 
 ### 1. Clone the Repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/mrayushsingh08-dot/MediSense.git
 cd MediSense
 ```
 
@@ -117,13 +129,13 @@ source .venv/bin/activate
 ### 3. Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ### 4. Run the Application
 
 ```bash
-python app.py
+python main.py
 ```
 
 Open your browser and visit:
@@ -132,7 +144,7 @@ Open your browser and visit:
 http://127.0.0.1:5000/
 ```
 
-Ensure that the required dataset and trained model files are available in their expected locations before running the application.
+Ensure that the required dataset and trained model files are available at the locations expected by the application.
 
 ## 📊 Expected Outcome
 
@@ -161,13 +173,14 @@ MediSense is intended for educational and informational purposes only. Its predi
 ## 👨‍💻 Author
 
 **Ayush Singh**
-
 Computer Science and Engineering Student
 
-* GitHub: [mrayushsingh08-dot](https://github.com/mrayushsingh08-dot)
+* **GitHub:** [mrayushsingh08-dot](https://github.com/mrayushsingh08-dot)
+* **Live Project:** [MediSense](https://medisenseofficials.vercel.app/)
 
 ---
 
 ⭐ If you find this project interesting, consider giving the repository a star.
 
 **Built as a Machine Learning and Web Development project focused on healthcare information and personalized recommendations.**
+
