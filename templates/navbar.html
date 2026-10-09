@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- ============================================================
+     MEDISENSE COMMON NAVBAR
+============================================================ -->
+
+<style>
+    /* Navbar only */
+    .ms-navbar {
+        background: #080c0a !important;
+        border-bottom: 1px solid #1d2b24;
+        padding: 10px 0;
+    }
+
+    /* Logo */
+    .ms-navbar-logo {
+        width: 46px;
+        height: 46px;
+        margin-left: 5px;
+    }
+
+    .ms-navbar-logo img {
+        width: 46px;
+        height: 46px;
+        border: 2px solid #20c997;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    /* Brand */
+    .ms-navbar-brand {
+        font-size: 21px;
+        font-weight: 700;
+        color: #ffffff !important;
+        letter-spacing: 0.2px;
+    }
+
+    .ms-navbar-brand span {
+        color: #20c997;
+    }
+
+    .ms-navbar-brand:hover {
+        color: #20c997 !important;
+    }
+
+    /* Navigation links */
+    .ms-navbar .ms-nav-link {
+        color: #b9c4bf !important;
+        font-weight: 500;
+        margin: 0 5px;
+        transition: 0.3s ease;
+    }
+
+    .ms-navbar .ms-nav-link:hover,
+    .ms-navbar .ms-nav-link.active {
+        color: #20c997 !important;
+    }
+
+    /* Mobile button */
+    .ms-navbar-toggler {
+        border-color: #20c997 !important;
+    }
+
+    .ms-navbar-toggler:focus {
+        box-shadow: 0 0 0 0.15rem rgba(32, 201, 151, 0.25);
+    }
+</style>
+
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+
+<nav class="ms-navbar navbar navbar-expand-lg navbar-dark">
+
+    <div class="container-fluid px-4">
+
+        <!-- Logo -->
+        <div class="ms-navbar-logo">
+            <img
+                src="{{ url_for('static', filename='imgo.png') }}"
+                alt="Health Center Logo"
+            >
+        </div>
+
+
+        <!-- Brand -->
+        <a class="ms-navbar-brand navbar-brand ms-2" href="/">
+            Medi<span>Sense</span>
+        </a>
+
+
+        <!-- Mobile Toggle -->
+        <button
+            class="navbar-toggler ms-navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#medisenseNavbar"
+            aria-controls="medisenseNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <!-- Navigation Links -->
+        <div
+            class="collapse navbar-collapse"
+            id="medisenseNavbar"
+        >
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link ms-nav-link" href="/">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link ms-nav-link" href="/about">
+                        About
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link ms-nav-link" href="/contact">
+                        Contact
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link ms-nav-link" href="/docmeet">
+                        DocMeet
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link ms-nav-link" href="/blog">
+                        Blog
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+</body>
+</html>

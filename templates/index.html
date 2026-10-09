@@ -1,0 +1,2889 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Health Care Center</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
+    <style>
+        /* =========================
+           GLOBAL
+        ========================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", "Segoe UI", Arial, sans-serif;
+            background: #050807;
+            color: #ffffff;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+
+        /* =========================
+           HERO / HEADING
+        ========================= */
+
+        .hero-section {
+            text-align: center;
+            padding: 65px 20px 35px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 7px 16px;
+            border: 1px solid #1c6b52;
+            border-radius: 30px;
+            color: #20c997;
+            background: rgba(32, 201, 151, 0.08);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .hero-section h1 {
+            font-size: 46px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .hero-section h1 span {
+            color: #20c997;
+        }
+
+        .hero-section p {
+            max-width: 650px;
+            margin: auto;
+            color: #9ca9a3;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           PREDICTION CARD
+        ========================= */
+
+        .prediction-card {
+            max-width: 850px;
+            margin: 25px auto 45px;
+            padding: 38px;
+            background: #0b100e;
+            border: 1px solid #1b2b24;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        .prediction-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .prediction-card .subtitle {
+            color: #89958f;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .form-label {
+            color: #dce5e1;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .form-control {
+            background: #050807;
+            border: 1px solid #2b3c34;
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 13px 15px;
+            min-height: 50px;
+            transition: 0.3s ease;
+        }
+
+        .form-control::placeholder {
+            color: #68756f;
+        }
+
+        .form-control:focus {
+            background: #070b09;
+            color: #ffffff;
+            border-color: #20c997;
+            box-shadow: 0 0 0 3px rgba(32, 201, 151, 0.12);
+        }
+
+
+        /* =========================
+           AUTOCOMPLETE
+        ========================= */
+
+        .autocomplete-container {
+            position: relative;
+        }
+
+        #suggestions {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #101613;
+            color: #ffffff;
+            border: 1px solid #294239;
+            border-radius: 10px;
+            z-index: 1000;
+            max-height: 250px;
+            overflow-y: auto;
+            margin-top: 5px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .suggestion-item {
+            padding: 11px 14px;
+            cursor: pointer;
+            border-bottom: 1px solid #1e2b25;
+            transition: 0.2s ease;
+        }
+
+        .suggestion-item:hover {
+            background: #123c30;
+            color: #20c997;
+        }
+
+        .selected-symptom {
+            display: inline-block;
+            background: rgba(32, 201, 151, 0.12);
+            color: #20c997;
+            border: 1px solid #1b7056;
+            padding: 7px 12px;
+            margin: 8px 4px 0 0;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           SPEECH BUTTON
+        ========================= */
+
+        .speech-btn {
+            background: transparent;
+            color: #20c997;
+            border: 1px solid #20c997;
+            border-radius: 10px;
+            padding: 11px 18px;
+            font-weight: 600;
+            transition: 0.3s ease;
+            margin-top: 18px;
+        }
+
+        .speech-btn:hover {
+            background: #20c997;
+            color: #04100b;
+            box-shadow: 0 5px 20px rgba(32, 201, 151, 0.2);
+        }
+
+        #transcription {
+            color: #9ca9a3;
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+
+        /* =========================
+           PREDICT BUTTON
+        ========================= */
+
+        .predict-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 22px;
+            background: #20c997;
+            color: #04100b;
+            border: 1px solid #20c997;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            transition: 0.3s ease;
+        }
+
+        .predict-btn:hover {
+            background: #27e0a9;
+            border-color: #27e0a9;
+            color: #04100b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(32, 201, 151, 0.25);
+        }
+
+
+        /* =========================
+           RESULTS
+        ========================= */
+
+        .results-section {
+            max-width: 1100px;
+            margin: 0 auto 70px;
+            padding: 0 20px;
+        }
+
+        .results-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .results-heading h2 {
+            font-size: 30px;
+            font-weight: 750;
+        }
+
+        .results-heading span {
+            color: #20c997;
+        }
+
+        .results-heading p {
+            color: #87938d;
+            font-size: 14px;
+        }
+
+        .result-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+
+        /* =========================
+           RESULT BUTTONS
+        ========================= */
+
+        .toggle-button {
+            border: 1px solid #26372f;
+            padding: 16px 12px;
+            font-size: 15px;
+            font-weight: 650;
+            border-radius: 12px;
+            color: #dfe8e4;
+            background: #0c120f !important;
+            transition: 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background: #20c997 !important;
+            border-color: #20c997;
+            color: #04100b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(32, 201, 151, 0.2);
+        }
+
+
+        /* =========================
+           MODALS
+        ========================= */
+
+        .modal-content {
+            background: #0b100e;
+            color: #ffffff;
+            border: 1px solid #26372f;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: #101713 !important;
+            border-bottom: 1px solid #26372f !important;
+            padding: 18px 20px;
+        }
+
+        .modal-title {
+            font-weight: 700;
+        }
+
+        .modal-body {
+            color: #c7d0cc;
+            padding: 22px;
+            line-height: 1.7;
+        }
+
+        .modal-body li {
+            margin-bottom: 8px;
+        }
+
+        .btn-close {
+            filter: invert(1);
+        }
+
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        .message-box {
+            color: #20c997;
+            background: rgba(32, 201, 151, 0.08);
+            border: 1px solid #1c604b;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+
+        /* =========================================================
+           QUICK HEALTH TOOLS
+        ========================================================= */
+
+        .qht-section {
+            max-width: 1320px;
+            margin: 0 auto 70px;
+            padding: 0 20px;
+        }
+
+        .qht-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .qht-heading h2 {
+            font-size: 30px;
+            font-weight: 750;
+        }
+
+        .qht-heading h2 span {
+            color: #20c997;
+        }
+
+        .qht-heading p {
+            color: #87938d;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .qht-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .qht-card {
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+            background: #0b100e;
+            border: 1px solid #1b2b24;
+            border-radius: 16px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.35);
+            transition: transform 0.3s ease, border-color 0.3s ease,
+                        box-shadow 0.3s ease;
+        }
+
+        .qht-card:hover,
+        .qht-card:focus-within {
+            transform: translateY(-4px);
+            border-color: #1b7056;
+            box-shadow: 0 12px 35px rgba(32, 201, 151, 0.12);
+        }
+
+        .qht-card h3 {
+            font-size: 19px;
+            font-weight: 700;
+            margin: 0 0 6px;
+        }
+
+        .qht-desc {
+            color: #89958f;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 18px;
+        }
+
+        .qht-fields {
+            flex: 1 1 auto;
+        }
+
+        .qht-field {
+            margin-bottom: 14px;
+        }
+
+        .qht-card .form-label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .qht-card .form-control {
+            width: 100%;
+            min-height: 46px;
+            padding: 10px 13px;
+            font-size: 14px;
+        }
+
+        .qht-card select.form-control option {
+            background: #0b100e;
+            color: #ffffff;
+        }
+
+        .qht-card input[type="date"].form-control {
+            color-scheme: dark;
+        }
+
+        .qht-card .form-control.qht-invalid {
+            border-color: #e5645f;
+            box-shadow: 0 0 0 3px rgba(229, 100, 95, 0.12);
+        }
+
+        .qht-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .qht-btn-primary,
+        .qht-btn-secondary {
+            flex: 1 1 0;
+            padding: 11px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .qht-btn-primary {
+            background: #20c997;
+            color: #04100b;
+            border: 1px solid #20c997;
+        }
+
+        .qht-btn-primary:hover {
+            background: #27e0a9;
+            border-color: #27e0a9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(32, 201, 151, 0.25);
+        }
+
+        .qht-btn-secondary {
+            background: transparent;
+            color: #20c997;
+            border: 1px solid #20c997;
+            flex: 0 0 auto;
+            min-width: 76px;
+        }
+
+        .qht-btn-secondary:hover {
+            background: #20c997;
+            color: #04100b;
+            box-shadow: 0 5px 20px rgba(32, 201, 151, 0.2);
+        }
+
+        .qht-btn-primary:focus-visible,
+        .qht-btn-secondary:focus-visible {
+            outline: 2px solid #27e0a9;
+            outline-offset: 2px;
+        }
+
+        .qht-output {
+            margin-top: 16px;
+            min-height: 112px;
+            padding: 14px;
+            background: rgba(32, 201, 151, 0.05);
+            border: 1px solid #1b2b24;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #c7d0cc;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .qht-output.qht-has-result {
+            border-color: #1c604b;
+            background: rgba(32, 201, 151, 0.08);
+        }
+
+        .qht-output.qht-has-error {
+            border-color: #7a3431;
+            background: rgba(229, 100, 95, 0.08);
+            color: #f1a9a6;
+        }
+
+        .qht-placeholder {
+            margin: 0;
+            color: #68756f;
+        }
+
+        .qht-value {
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.1;
+            color: #20c997;
+        }
+
+        .qht-value small {
+            font-size: 13px;
+            font-weight: 600;
+            color: #9ca9a3;
+            margin-left: 4px;
+        }
+
+        .qht-badge {
+            display: inline-block;
+            margin: 8px 0;
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 1px solid #1c6b52;
+            background: rgba(32, 201, 151, 0.08);
+            color: #20c997;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .qht-badge.qht-warn {
+            border-color: #8a6a2a;
+            background: rgba(240, 180, 76, 0.1);
+            color: #f0b44c;
+        }
+
+        .qht-output p {
+            margin: 0;
+        }
+
+        .qht-stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .qht-stats.qht-stats-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .qht-stat strong {
+            display: block;
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.1;
+            color: #20c997;
+        }
+
+        .qht-stat span {
+            font-size: 12px;
+            color: #9ca9a3;
+        }
+
+        .qht-note {
+            margin: 12px 0 0;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #68756f;
+        }
+
+        .qht-disclaimer {
+            max-width: 800px;
+            margin: 26px auto 0;
+            padding: 14px 18px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #87938d;
+            border: 1px solid #1b2b24;
+            border-radius: 12px;
+            background: #0b100e;
+        }
+
+        @media (max-width: 1099px) {
+            .qht-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .qht-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .qht-heading h2 {
+                font-size: 26px;
+            }
+
+            .qht-section {
+                margin-bottom: 50px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .qht-card,
+            .qht-btn-primary,
+            .qht-btn-secondary,
+            .qht-output {
+                transition: none;
+            }
+
+            .qht-card:hover,
+            .qht-card:focus-within,
+            .qht-btn-primary:hover {
+                transform: none;
+            }
+        }
+
+
+        
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            .hero-section {
+                padding-top: 45px;
+            }
+
+            .hero-section h1 {
+                font-size: 34px;
+            }
+
+            .prediction-card {
+                margin: 20px 15px 40px;
+                padding: 25px 20px;
+            }
+
+            .result-container {
+                grid-template-columns: 1fr;
+            }
+
+            .results-heading h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+
+<section class="hero-section">
+
+    <div class="hero-badge">
+        AI-Powered Healthcare Assistant
+    </div>
+
+    <h1>
+        Your Health, <span>Our Priority.</span>
+    </h1>
+
+    <p>
+        Enter your symptoms and get an AI-based health prediction
+        along with useful precautions, medications, diet and workout
+        recommendations.
+    </p>
+
+</section>
+
+
+<!-- ============================================================
+     SYMPTOM PREDICTION
+============================================================ -->
+
+<div class="prediction-card">
+
+    <h3>Check Your Symptoms</h3>
+
+    <p class="subtitle">
+        Select or type the symptoms you are experiencing.
+    </p>
+
+    <form action="/predict" method="post">
+
+        <div class="form-group autocomplete-container">
+
+            <label for="symptoms" class="form-label">
+                Symptoms
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                id="symptoms"
+                name="symptoms"
+                autocomplete="off"
+                placeholder="e.g. itching, skin_rash, headache..."
+            >
+
+            <div id="suggestions"></div>
+
+        </div>
+
+
+        <div id="selectedSymptoms"></div>
+
+
+        <button
+            type="button"
+            id="startSpeechRecognition"
+            class="speech-btn"
+        >
+            Start Speech Recognition
+        </button>
+
+
+        <div id="transcription"></div>
+
+
+        {% if message %}
+            <div class="message-box">
+                {{ message }}
+            </div>
+        {% endif %}
+
+
+        <button type="submit" class="predict-btn">
+            Predict Health Condition
+        </button>
+
+    </form>
+
+</div>
+
+
+<!-- ============================================================
+     AI HEALTH RESULTS
+     IMPORTANT: This stays ABOVE Quick Health Tools
+============================================================ -->
+
+{% if predicted_disease %}
+
+<section class="results-section">
+
+    <div class="results-heading">
+
+        <h2>
+            Your <span>AI Health Results</span>
+        </h2>
+
+        <p>
+            Explore the information generated from your symptoms.
+        </p>
+
+    </div>
+
+
+    <div class="result-container">
+
+        <button
+            class="toggle-button"
+            data-bs-toggle="modal"
+            data-bs-target="#diseaseModal"
+        >
+            Disease
+        </button>
+
+        <button
+            class="toggle-button"
+            data-bs-toggle="modal"
+            data-bs-target="#descriptionModal"
+        >
+            Description
+        </button>
+
+        <button
+            class="toggle-button"
+            data-bs-toggle="modal"
+            data-bs-target="#precautionModal"
+        >
+            Precautions
+        </button>
+
+        <button
+            class="toggle-button"
+            data-bs-toggle="modal"
+            data-bs-target="#medicationsModal"
+        >
+            Medications
+        </button>
+
+        <button
+            class="toggle-button"
+            data-bs-toggle="modal"
+            data-bs-target="#workoutsModal"
+        >
+            Workouts
+        </button>
+
+        <button
+            class="toggle-button"
+            data-bs-toggle="modal"
+            data-bs-target="#dietsModal"
+        >
+            Diet & Nutrition
+        </button>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+<!-- ============================================================
+     QUICK HEALTH TOOLS
+============================================================ -->
+
+<section class="qht-section" id="quick-health-tools">
+
+    <div class="qht-heading">
+
+        <h2>
+            Quick <span>Health Tools</span>
+        </h2>
+
+        <p>
+            Simple tools to help you understand your basic health information.
+        </p>
+
+    </div>
+
+
+    <div class="qht-grid">
+
+
+        <!-- ================= BMI CALCULATOR ================= -->
+
+        <div class="qht-card" data-tool="bmi">
+
+            <h3>BMI Calculator</h3>
+
+            <p class="qht-desc">
+                Check your body mass index from your height and weight.
+            </p>
+
+            <div class="qht-fields">
+
+                <div class="qht-field">
+
+                    <label
+                        class="form-label"
+                        for="qht-bmi-height"
+                    >
+                        Height (cm)
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="qht-bmi-height"
+                        placeholder="e.g. 170"
+                        min="0"
+                        step="any"
+                        inputmode="decimal"
+                    >
+
+                </div>
+
+
+                <div class="qht-field">
+
+                    <label
+                        class="form-label"
+                        for="qht-bmi-weight"
+                    >
+                        Weight (kg)
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="qht-bmi-weight"
+                        placeholder="e.g. 65"
+                        min="0"
+                        step="any"
+                        inputmode="decimal"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="qht-actions">
+
+                <button
+                    type="button"
+                    class="qht-btn-primary"
+                    data-action="calculate"
+                >
+                    Calculate BMI
+                </button>
+
+                <button
+                    type="button"
+                    class="qht-btn-secondary"
+                    data-action="reset"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+
+            <div
+                class="qht-output"
+                aria-live="polite"
+            >
+                <p class="qht-placeholder">
+                    Your result will appear here.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- ================= WATER INTAKE ================= -->
+
+        <div class="qht-card" data-tool="water">
+
+            <h3>Water Intake Calculator</h3>
+
+            <p class="qht-desc">
+                Estimate how much water you should drink each day.
+            </p>
+
+            <div class="qht-fields">
+
+                <div class="qht-field">
+
+                    <label
+                        class="form-label"
+                        for="qht-water-weight"
+                    >
+                        Weight (kg)
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="qht-water-weight"
+                        placeholder="e.g. 65"
+                        min="0"
+                        step="any"
+                        inputmode="decimal"
+                    >
+
+                </div>
+
+
+                <div class="qht-field">
+
+                    <label
+                        class="form-label"
+                        for="qht-water-activity"
+                    >
+                        Activity level
+                    </label>
+
+                    <select
+                        class="form-control"
+                        id="qht-water-activity"
+                    >
+
+                        <option value="">
+                            Select activity level
+                        </option>
+
+                        <option value="0">
+                            Low (mostly sitting)
+                        </option>
+
+                        <option value="0.35">
+                            Light (some walking or exercise)
+                        </option>
+
+                        <option value="0.6">
+                            Moderate (regular exercise)
+                        </option>
+
+                        <option value="0.9">
+                            High (intense daily exercise)
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="qht-actions">
+
+                <button
+                    type="button"
+                    class="qht-btn-primary"
+                    data-action="calculate"
+                >
+                    Calculate
+                </button>
+
+                <button
+                    type="button"
+                    class="qht-btn-secondary"
+                    data-action="reset"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+
+            <div
+                class="qht-output"
+                aria-live="polite"
+            >
+                <p class="qht-placeholder">
+                    Your result will appear here.
+                </p>
+            </div>
+
+
+            <p class="qht-note">
+                This result is only an estimate. Actual water needs may vary
+                with climate, health and diet.
+            </p>
+
+        </div>
+
+
+        <!-- ================= CALORIE ESTIMATE ================= -->
+
+        <div class="qht-card" data-tool="calorie">
+
+            <h3>Calorie Estimate</h3>
+
+            <p class="qht-desc">
+                Estimate the calories your body needs per day.
+            </p>
+
+            <div class="qht-fields">
+
+                <div class="qht-field">
+
+                    <label
+                        class="form-label"
+                        for="qht-cal-age"
+                    >
+                        Age (years)
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="qht-cal-age"
+                        placeholder="e.g. 25"
+                        min="0"
+                        step="1"
+                        inputmode="numeric"
+                    >
+
+                </div>
+
+
+                <div class="qht-field">
+
+                    <label
+                        class="form-label"
+                        for="qht-cal-gender"
+                    >
+                        Gender
+                    </label>
+
+                    <select
+                        class="form-control"
+                        id="qht-cal-gender"
+                    >
+
+                        <option value="">
+                            Select gender
+                        </option>
+
+                        <option value="male">
+                            Male
+                        </option>
+
+                        <option value="female">
+                            Female
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="qht-field">
+
+                    <label
+                        class="form-label"
+                        for="qht-cal-height"
+                    >
+                        Height (cm)
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="qht-cal-height"
+                        placeholder="e.g. 170"
+                        min="0"
+                        step="any"
+                        inputmode="decimal"
+                    >
+
+                </div>
+
+
+                <div class="qht-field">
+
+                    <label
+                        class="form-label"
+                        for="qht-cal-weight"
+                    >
+                        Weight (kg)
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        id="qht-cal-weight"
+                        placeholder="e.g. 65"
+                        min="0"
+                        step="any"
+                        inputmode="decimal"
+                    >
+
+                </div>
+
+
+                <div class="qht-field">
+
+                    <label
+                        class="form-label"
+                        for="qht-cal-activity"
+                    >
+                        Activity level
+                    </label>
+
+                    <select
+                        class="form-control"
+                        id="qht-cal-activity"
+                    >
+
+                        <option value="">
+                            Select activity level
+                        </option>
+
+                        <option value="1.2">
+                            Sedentary (little or no exercise)
+                        </option>
+
+                        <option value="1.375">
+                            Light (1-3 days per week)
+                        </option>
+
+                        <option value="1.55">
+                            Moderate (3-5 days per week)
+                        </option>
+
+                        <option value="1.725">
+                            Active (6-7 days per week)
+                        </option>
+
+                        <option value="1.9">
+                            Very active (physical job or twice daily training)
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="qht-actions">
+
+                <button
+                    type="button"
+                    class="qht-btn-primary"
+                    data-action="calculate"
+                >
+                    Calculate
+                </button>
+
+                <button
+                    type="button"
+                    class="qht-btn-secondary"
+                    data-action="reset"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+
+            <div
+                class="qht-output"
+                aria-live="polite"
+            >
+                <p class="qht-placeholder">
+                    Your result will appear here.
+                </p>
+            </div>
+
+
+            <p class="qht-note">
+                This is an estimate and not personalized medical or dietary advice.
+            </p>
+
+        </div>
+
+
+        <!-- ================= AGE CALCULATOR ================= -->
+
+        <div class="qht-card" data-tool="age">
+
+            <h3>Age Calculator</h3>
+
+            <p class="qht-desc">
+                Find your exact age in years, months and days.
+            </p>
+
+            <div class="qht-fields">
+
+                <div class="qht-field">
+
+                    <label
+                        class="form-label"
+                        for="qht-age-dob"
+                    >
+                        Date of birth
+                    </label>
+
+                    <input
+                        type="date"
+                        class="form-control"
+                        id="qht-age-dob"
+                        min="1900-01-01"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="qht-actions">
+
+                <button
+                    type="button"
+                    class="qht-btn-primary"
+                    data-action="calculate"
+                >
+                    Calculate Age
+                </button>
+
+                <button
+                    type="button"
+                    class="qht-btn-secondary"
+                    data-action="reset"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+
+            <div
+                class="qht-output"
+                aria-live="polite"
+            >
+                <p class="qht-placeholder">
+                    Your result will appear here.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <p class="qht-disclaimer">
+        These tools provide general estimates for informational purposes only
+        and are not a substitute for professional medical advice, diagnosis,
+        or treatment.
+    </p>
+
+</section>
+
+
+<!-- ============================================================
+     DISEASE MODAL
+============================================================ -->
+
+<div
+    class="modal fade"
+    id="diseaseModal"
+    tabindex="-1"
+    aria-labelledby="diseaseModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="diseaseModalLabel"
+                >
+                    Predicted Disease
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+            <div class="modal-body">
+                {{ predicted_disease }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     DESCRIPTION MODAL
+============================================================ -->
+
+<div
+    class="modal fade"
+    id="descriptionModal"
+    tabindex="-1"
+    aria-labelledby="descriptionModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="descriptionModalLabel"
+                >
+                    Description
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+            <div class="modal-body">
+                {{ dis_des }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     PRECAUTIONS MODAL
+============================================================ -->
+
+<div
+    class="modal fade"
+    id="precautionModal"
+    tabindex="-1"
+    aria-labelledby="precautionModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="precautionModalLabel"
+                >
+                    Precautions
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <ul>
+
+                    {% for precaution in my_precautions %}
+                        <li>{{ precaution }}</li>
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     MEDICATIONS MODAL
+============================================================ -->
+
+<div
+    class="modal fade"
+    id="medicationsModal"
+    tabindex="-1"
+    aria-labelledby="medicationsModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="medicationsModalLabel"
+                >
+                    Medications
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <ul>
+
+                    {% for medication in medications %}
+                        <li>{{ medication }}</li>
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     WORKOUT MODAL
+============================================================ -->
+
+<div
+    class="modal fade"
+    id="workoutsModal"
+    tabindex="-1"
+    aria-labelledby="workoutsModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="workoutsModalLabel"
+                >
+                    Workouts
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <ul>
+
+                    {% for item in workout %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     DIET MODAL
+============================================================ -->
+
+<div
+    class="modal fade"
+    id="dietsModal"
+    tabindex="-1"
+    aria-labelledby="dietsModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="dietsModalLabel"
+                >
+                    Diet & Nutrition
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <ul>
+
+                    {% for item in my_diet %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+
+{% include 'footer.html' %}
+
+
+<!-- ============================================================
+     SYMPTOMS DATA
+============================================================ -->
+
+<script
+    id="symptoms-data"
+    type="application/json"
+>
+    {{ symptoms_list | tojson }}
+</script>
+
+
+<!-- ============================================================
+     EXISTING AUTOCOMPLETE + SPEECH RECOGNITION
+============================================================ -->
+
+<script>
+
+    const symptomsDataElement =
+        document.getElementById("symptoms-data");
+
+    let symptomsList = [];
+
+    try {
+
+        symptomsList =
+            JSON.parse(symptomsDataElement.textContent);
+
+    } catch (error) {
+
+        console.error(
+            "Could not load symptoms list:",
+            error
+        );
+
+    }
+
+
+    const symptomsInput =
+        document.getElementById("symptoms");
+
+    const suggestionsBox =
+        document.getElementById("suggestions");
+
+    const startSpeechRecognitionButton =
+        document.getElementById(
+            "startSpeechRecognition"
+        );
+
+    const transcriptionDiv =
+        document.getElementById("transcription");
+
+
+    /* =========================
+       AUTOCOMPLETE
+    ========================= */
+
+    symptomsInput.addEventListener(
+        "input",
+        function () {
+
+            const value = this.value;
+
+            const parts = value.split(",");
+
+            const currentText =
+                parts[parts.length - 1]
+                    .trim()
+                    .toLowerCase();
+
+
+            suggestionsBox.innerHTML = "";
+
+
+            if (!currentText) {
+
+                suggestionsBox.style.display =
+                    "none";
+
+                return;
+            }
+
+
+            const matches =
+                symptomsList
+                    .filter(function (symptom) {
+
+                        return symptom
+                            .toLowerCase()
+                            .includes(currentText);
+
+                    })
+                    .slice(0, 10);
+
+
+            matches.forEach(function (symptom) {
+
+                const suggestion =
+                    document.createElement("div");
+
+                suggestion.className =
+                    "suggestion-item";
+
+                suggestion.textContent =
+                    symptom.replace(/_/g, " ");
+
+
+                suggestion.addEventListener(
+                    "click",
+                    function () {
+
+                        parts[parts.length - 1] =
+                            symptom;
+
+                        symptomsInput.value =
+                            parts.join(", ") + ", ";
+
+                        suggestionsBox.innerHTML =
+                            "";
+
+                        suggestionsBox.style.display =
+                            "none";
+
+                        symptomsInput.focus();
+
+                    }
+                );
+
+
+                suggestionsBox.appendChild(
+                    suggestion
+                );
+
+            });
+
+
+            suggestionsBox.style.display =
+                matches.length > 0
+                    ? "block"
+                    : "none";
+
+        }
+    );
+
+
+    /* =========================
+       CLOSE AUTOCOMPLETE
+    ========================= */
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target !== symptomsInput &&
+                !suggestionsBox.contains(event.target)
+            ) {
+
+                suggestionsBox.innerHTML =
+                    "";
+
+                suggestionsBox.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       SPEECH RECOGNITION
+    ========================= */
+
+    if (startSpeechRecognitionButton) {
+
+        startSpeechRecognitionButton.addEventListener(
+            "click",
+            startSpeechRecognition
+        );
+
+    }
+
+
+    function startSpeechRecognition() {
+
+        const SpeechRecognition =
+            window.SpeechRecognition ||
+            window.webkitSpeechRecognition;
+
+
+        if (!SpeechRecognition) {
+
+            alert(
+                "Speech recognition is not supported in this browser."
+            );
+
+            return;
+        }
+
+
+        const recognition =
+            new SpeechRecognition();
+
+
+        recognition.lang =
+            "en-US";
+
+        recognition.continuous =
+            false;
+
+        recognition.interimResults =
+            false;
+
+
+        recognition.onresult =
+            function (event) {
+
+                const result =
+                    event.results[0][0]
+                        .transcript;
+
+
+                if (transcriptionDiv) {
+
+                    transcriptionDiv.textContent =
+                        result;
+
+                }
+
+
+                symptomsInput.value =
+                    result;
+
+                symptomsInput.dispatchEvent(
+                    new Event("input")
+                );
+
+            };
+
+
+        recognition.onerror =
+            function (event) {
+
+                console.error(
+                    "Speech recognition error:",
+                    event.error
+                );
+
+            };
+
+
+        recognition.onend =
+            function () {
+
+                console.log(
+                    "Speech recognition ended."
+                );
+
+            };
+
+
+        recognition.start();
+
+    }
+
+</script>
+
+
+<!-- ============================================================
+     QUICK HEALTH TOOLS JAVASCRIPT
+============================================================ -->
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    var section =
+        document.getElementById(
+            "quick-health-tools"
+        );
+
+
+    if (!section) {
+        return;
+    }
+
+
+    var PLACEHOLDER =
+        '<p class="qht-placeholder">Your result will appear here.</p>';
+
+
+    function byId(id) {
+        return document.getElementById(id);
+    }
+
+
+    function capitalize(text) {
+
+        return text.charAt(0).toUpperCase() +
+               text.slice(1);
+
+    }
+
+
+    /* =========================
+       OUTPUT HELPERS
+    ========================= */
+
+    function showResult(output, html) {
+
+        output.className =
+            "qht-output qht-has-result";
+
+        output.innerHTML =
+            html;
+
+    }
+
+
+    function showError(
+        output,
+        message,
+        field
+    ) {
+
+        output.className =
+            "qht-output qht-has-error";
+
+        output.textContent =
+            message;
+
+
+        if (field) {
+
+            field.classList.add(
+                "qht-invalid"
+            );
+
+            field.focus();
+
+        }
+
+    }
+
+
+    function clearInvalid(card) {
+
+        var fields =
+            card.querySelectorAll(
+                ".qht-invalid"
+            );
+
+
+        for (
+            var i = 0;
+            i < fields.length;
+            i++
+        ) {
+
+            fields[i].classList.remove(
+                "qht-invalid"
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       VALIDATION
+    ========================= */
+
+    function readNumber(
+        id,
+        label,
+        min,
+        max,
+        unit,
+        wholeOnly
+    ) {
+
+        var el =
+            byId(id);
+
+        var raw =
+            el.value.trim();
+
+
+        if (raw === "") {
+
+            return {
+                error:
+                    "Please enter your " +
+                    label +
+                    ".",
+                el: el
+            };
+
+        }
+
+
+        var value =
+            Number(raw);
+
+
+        if (!isFinite(value)) {
+
+            return {
+                error:
+                    "Please enter a valid number for " +
+                    label +
+                    ".",
+                el: el
+            };
+
+        }
+
+
+        if (value <= 0) {
+
+            return {
+                error:
+                    capitalize(label) +
+                    " must be greater than zero.",
+                el: el
+            };
+
+        }
+
+
+        if (
+            wholeOnly &&
+            Math.floor(value) !== value
+        ) {
+
+            return {
+                error:
+                    capitalize(label) +
+                    " must be a whole number.",
+                el: el
+            };
+
+        }
+
+
+        if (
+            value < min ||
+            value > max
+        ) {
+
+            return {
+                error:
+                    capitalize(label) +
+                    " must be between " +
+                    min +
+                    " and " +
+                    max +
+                    " " +
+                    unit +
+                    ".",
+                el: el
+            };
+
+        }
+
+
+        return {
+            value: value
+        };
+
+    }
+
+
+    function readSelect(
+        id,
+        label
+    ) {
+
+        var el =
+            byId(id);
+
+
+        if (el.value === "") {
+
+            return {
+                error:
+                    "Please select your " +
+                    label +
+                    ".",
+                el: el
+            };
+
+        }
+
+
+        return {
+            value: el.value
+        };
+
+    }
+
+
+    /* =========================
+       BMI
+    ========================= */
+
+    function calculateBmi(output) {
+
+        var h =
+            readNumber(
+                "qht-bmi-height",
+                "height",
+                50,
+                250,
+                "cm"
+            );
+
+
+        if (h.error) {
+
+            return showError(
+                output,
+                h.error,
+                h.el
+            );
+
+        }
+
+
+        var w =
+            readNumber(
+                "qht-bmi-weight",
+                "weight",
+                10,
+                500,
+                "kg"
+            );
+
+
+        if (w.error) {
+
+            return showError(
+                output,
+                w.error,
+                w.el
+            );
+
+        }
+
+
+        var meters =
+            h.value / 100;
+
+
+        var bmi =
+            w.value /
+            (meters * meters);
+
+
+        var category;
+        var message;
+        var warn = false;
+
+
+        if (bmi < 18.5) {
+
+            category =
+                "Underweight";
+
+            message =
+                "Your BMI is below the usual healthy range. A balanced, nutritious diet may help, and a doctor can advise if you are concerned.";
+
+            warn = true;
+
+        } else if (bmi < 25) {
+
+            category =
+                "Normal";
+
+            message =
+                "Your BMI is in the healthy range. Keep up balanced eating and regular activity.";
+
+        } else if (bmi < 30) {
+
+            category =
+                "Overweight";
+
+            message =
+                "Your BMI is above the usual healthy range. Regular activity and balanced meals can help.";
+
+            warn = true;
+
+        } else {
+
+            category =
+                "Obese";
+
+            message =
+                "Your BMI is in the obese range, which can raise health risks. Consider speaking with a healthcare professional.";
+
+            warn = true;
+
+        }
+
+
+        showResult(
+
+            output,
+
+            '<div class="qht-value">' +
+                bmi.toFixed(1) +
+                '<small>kg/m&sup2;</small>' +
+            '</div>' +
+
+            '<span class="qht-badge' +
+                (warn ? " qht-warn" : "") +
+            '">' +
+                category +
+            '</span>' +
+
+            '<p>' +
+                message +
+            '</p>'
+
+        );
+
+    }
+
+
+    /* =========================
+       WATER
+    ========================= */
+
+    function calculateWater(output) {
+
+        var w =
+            readNumber(
+                "qht-water-weight",
+                "weight",
+                10,
+                300,
+                "kg"
+            );
+
+
+        if (w.error) {
+
+            return showError(
+                output,
+                w.error,
+                w.el
+            );
+
+        }
+
+
+        var a =
+            readSelect(
+                "qht-water-activity",
+                "activity level"
+            );
+
+
+        if (a.error) {
+
+            return showError(
+                output,
+                a.error,
+                a.el
+            );
+
+        }
+
+
+        var litres =
+            (w.value * 0.033) +
+            Number(a.value);
+
+
+        var glasses =
+            Math.round(
+                litres * 4
+            );
+
+
+        showResult(
+
+            output,
+
+            '<div class="qht-stats">' +
+
+                '<div class="qht-stat">' +
+                    '<strong>' +
+                        litres.toFixed(1) +
+                    '</strong>' +
+                    '<span>Litres/day</span>' +
+                '</div>' +
+
+                '<div class="qht-stat">' +
+                    '<strong>' +
+                        glasses +
+                    '</strong>' +
+                    '<span>Glasses/day</span>' +
+                '</div>' +
+
+            '</div>' +
+
+            '<p>Based on glasses of about 250 ml each.</p>'
+
+        );
+
+    }
+
+
+    /* =========================
+       CALORIE
+    ========================= */
+
+    function calculateCalories(output) {
+
+        var age =
+            readNumber(
+                "qht-cal-age",
+                "age",
+                15,
+                100,
+                "years",
+                true
+            );
+
+
+        if (age.error) {
+
+            return showError(
+                output,
+                age.error,
+                age.el
+            );
+
+        }
+
+
+        var gender =
+            readSelect(
+                "qht-cal-gender",
+                "gender"
+            );
+
+
+        if (gender.error) {
+
+            return showError(
+                output,
+                gender.error,
+                gender.el
+            );
+
+        }
+
+
+        var h =
+            readNumber(
+                "qht-cal-height",
+                "height",
+                100,
+                250,
+                "cm"
+            );
+
+
+        if (h.error) {
+
+            return showError(
+                output,
+                h.error,
+                h.el
+            );
+
+        }
+
+
+        var w =
+            readNumber(
+                "qht-cal-weight",
+                "weight",
+                25,
+                300,
+                "kg"
+            );
+
+
+        if (w.error) {
+
+            return showError(
+                output,
+                w.error,
+                w.el
+            );
+
+        }
+
+
+        var act =
+            readSelect(
+                "qht-cal-activity",
+                "activity level"
+            );
+
+
+        if (act.error) {
+
+            return showError(
+                output,
+                act.error,
+                act.el
+            );
+
+        }
+
+
+        var bmr =
+            (10 * w.value) +
+            (6.25 * h.value) -
+            (5 * age.value) +
+            (
+                gender.value === "male"
+                    ? 5
+                    : -161
+            );
+
+
+        var tdee =
+            bmr * Number(act.value);
+
+
+        showResult(
+
+            output,
+
+            '<div class="qht-value">' +
+                Math.round(tdee)
+                    .toLocaleString() +
+                '<small>kcal/day</small>' +
+            '</div>' +
+
+            '<p>' +
+                "Your body burns about " +
+                Math.round(bmr)
+                    .toLocaleString() +
+                " kcal/day at rest. With your activity level, this is roughly the energy needed to maintain your current weight." +
+            '</p>'
+
+        );
+
+    }
+
+
+    /* =========================
+       AGE
+    ========================= */
+
+    function calculateAge(output) {
+
+        var el =
+            byId("qht-age-dob");
+
+
+        if (el.value === "") {
+
+            return showError(
+                output,
+                "Please select your date of birth.",
+                el
+            );
+
+        }
+
+
+        var parts =
+            el.value.split("-");
+
+
+        var by =
+            Number(parts[0]);
+
+        var bm =
+            Number(parts[1]) - 1;
+
+        var bd =
+            Number(parts[2]);
+
+
+        var birth =
+            new Date(
+                by,
+                bm,
+                bd
+            );
+
+
+        if (
+            isNaN(birth.getTime()) ||
+            birth.getFullYear() !== by ||
+            birth.getMonth() !== bm ||
+            birth.getDate() !== bd
+        ) {
+
+            return showError(
+                output,
+                "Please enter a valid date of birth.",
+                el
+            );
+
+        }
+
+
+        var now =
+            new Date();
+
+
+        var today =
+            new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate()
+            );
+
+
+        if (birth > today) {
+
+            return showError(
+                output,
+                "Date of birth cannot be in the future.",
+                el
+            );
+
+        }
+
+
+        if (by < 1900) {
+
+            return showError(
+                output,
+                "Please enter a year from 1900 onwards.",
+                el
+            );
+
+        }
+
+
+        var years =
+            today.getFullYear() -
+            by;
+
+
+        var months =
+            today.getMonth() -
+            bm;
+
+
+        var days =
+            today.getDate() -
+            bd;
+
+
+        var pm =
+            today.getMonth();
+
+        var py =
+            today.getFullYear();
+
+
+        while (days < 0) {
+
+            pm--;
+
+            if (pm < 0) {
+
+                pm = 11;
+                py--;
+
+            }
+
+
+            days +=
+                new Date(
+                    py,
+                    pm + 1,
+                    0
+                ).getDate();
+
+
+            months--;
+
+        }
+
+
+        if (months < 0) {
+
+            years--;
+
+            months += 12;
+
+        }
+
+
+        showResult(
+
+            output,
+
+            '<div class="qht-stats qht-stats-3">' +
+
+                '<div class="qht-stat">' +
+                    '<strong>' +
+                        years +
+                    '</strong>' +
+                    '<span>Years</span>' +
+                '</div>' +
+
+                '<div class="qht-stat">' +
+                    '<strong>' +
+                        months +
+                    '</strong>' +
+                    '<span>Months</span>' +
+                '</div>' +
+
+                '<div class="qht-stat">' +
+                    '<strong>' +
+                        days +
+                    '</strong>' +
+                    '<span>Days</span>' +
+                '</div>' +
+
+            '</div>'
+
+        );
+
+    }
+
+
+    /* =========================
+       TOOLS
+    ========================= */
+
+    var tools = {
+
+        bmi: calculateBmi,
+
+        water: calculateWater,
+
+        calorie: calculateCalories,
+
+        age: calculateAge
+
+    };
+
+
+    /* =========================
+       WIRE CARDS
+    ========================= */
+
+    var cards =
+        section.querySelectorAll(
+            ".qht-card"
+        );
+
+
+    Array.prototype.forEach.call(
+        cards,
+        function (card) {
+
+            var tool =
+                card.getAttribute(
+                    "data-tool"
+                );
+
+
+            var output =
+                card.querySelector(
+                    ".qht-output"
+                );
+
+
+            function run() {
+
+                clearInvalid(card);
+
+                tools[tool](output);
+
+            }
+
+
+            function reset() {
+
+                var inputs =
+                    card.querySelectorAll(
+                        "input, select"
+                    );
+
+
+                for (
+                    var i = 0;
+                    i < inputs.length;
+                    i++
+                ) {
+
+                    inputs[i].value =
+                        "";
+
+                }
+
+
+                clearInvalid(card);
+
+
+                output.className =
+                    "qht-output";
+
+
+                output.innerHTML =
+                    PLACEHOLDER;
+
+            }
+
+
+            card.querySelector(
+                '[data-action="calculate"]'
+            ).addEventListener(
+                "click",
+                run
+            );
+
+
+            card.querySelector(
+                '[data-action="reset"]'
+            ).addEventListener(
+                "click",
+                reset
+            );
+
+
+            card.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key === "Enter" &&
+                        event.target.tagName === "INPUT"
+                    ) {
+
+                        event.preventDefault();
+
+                        run();
+
+                    }
+
+                }
+            );
+
+
+            card.addEventListener(
+                "input",
+                function (event) {
+
+                    event.target.classList.remove(
+                        "qht-invalid"
+                    );
+
+                }
+            );
+
+
+            card.addEventListener(
+                "change",
+                function (event) {
+
+                    event.target.classList.remove(
+                        "qht-invalid"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =========================
+       DOB MAX = TODAY
+    ========================= */
+
+    var dobInput =
+        byId("qht-age-dob");
+
+
+    if (dobInput) {
+
+        var n =
+            new Date();
+
+
+        var mm =
+            String(
+                n.getMonth() + 1
+            ).padStart(2, "0");
+
+
+        var dd =
+            String(
+                n.getDate()
+            ).padStart(2, "0");
+
+
+        dobInput.max =
+            n.getFullYear() +
+            "-" +
+            mm +
+            "-" +
+            dd;
+
+    }
+
+})();
+
+</script>
+
+
+<!-- ============================================================
+     BOOTSTRAP JS
+============================================================ -->
+
+<script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+
+</body>
+</html>

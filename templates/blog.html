@@ -1,0 +1,3239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>MediSense Insights | Blog</title>
+
+    <meta
+        name="description"
+        content="Simple health knowledge, wellness guidance, and healthcare technology insights from MediSense."
+    >
+
+    <!-- Bootstrap CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='bootstrap.min.css') }}"
+    >
+
+    <style>
+
+        /* =========================
+           THEME
+        ========================= */
+
+        :root {
+            --bg: #050a08;
+            --bg-2: #08120e;
+            --card: rgba(255, 255, 255, .04);
+            --line: rgba(255, 255, 255, .09);
+
+            --green: #10b981;
+            --green-2: #34d399;
+            --green-d: #064e3b;
+
+            --text: #ffffff;
+            --muted: #9ca3af;
+
+            --r: 18px;
+            --shadow: 0 12px 32px rgba(0, 0, 0, .45);
+
+            font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--muted);
+            line-height: 1.65;
+            overflow-x: hidden;
+
+            background-image:
+                radial-gradient(
+                    900px 500px at 85% -5%,
+                    rgba(16, 185, 129, .14),
+                    transparent 60%
+                ),
+                radial-gradient(
+                    700px 500px at -5% 40%,
+                    rgba(16, 185, 129, .07),
+                    transparent 60%
+                );
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+        .wrap {
+            width: min(1200px, 92%);
+            margin: 0 auto;
+        }
+
+        section {
+            padding: 72px 0;
+        }
+
+        .sec-head {
+            margin-bottom: 34px;
+        }
+
+        .sec-head h2 {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            margin-bottom: 8px;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--green-2);
+            outline-offset: 3px;
+        }
+
+        svg.i {
+            width: 1em;
+            height: 1em;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex: none;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 22px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: .92rem;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .btn-g {
+            background: var(--green);
+            color: #03150e;
+        }
+
+        .btn-g:hover {
+            background: var(--green-2);
+            box-shadow: 0 0 0 5px rgba(16, 185, 129, .18);
+            transform: translateY(-2px);
+        }
+
+        .btn-o {
+            border-color: rgba(16, 185, 129, .5);
+            color: var(--green-2);
+            background: transparent;
+            padding: 9px 18px;
+        }
+
+        .btn-o:hover {
+            background: var(--green);
+            color: #03150e;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            padding: 84px 0 56px;
+        }
+
+        .hero .wrap {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 5.5vw, 4rem);
+            letter-spacing: -.02em;
+        }
+
+        .hero .sub {
+            color: var(--green-2);
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 14px 0;
+        }
+
+        .hero p.intro {
+            max-width: 540px;
+            margin-bottom: 28px;
+        }
+
+
+        /* =========================
+           HERO ART
+        ========================= */
+
+        .hero-art {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            max-width: 440px;
+            margin-inline: auto;
+            width: 100%;
+        }
+
+        .hero-art .ring {
+            position: absolute;
+            inset: 6%;
+            border-radius: 50%;
+            border: 1px dashed rgba(52, 211, 153, .35);
+            animation: spin 40s linear infinite;
+        }
+
+        .hero-art .core {
+            position: absolute;
+            inset: 18%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 30% 25%,
+                #0f3d2e,
+                #06100c
+            );
+            border: 1px solid rgba(16, 185, 129, .4);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 70px rgba(16, 185, 129, .25);
+        }
+
+        .hero-art .core svg {
+            width: 56%;
+            color: var(--green-2);
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .chip {
+            position: absolute;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 10px 14px;
+            border-radius: 14px;
+            background: rgba(10, 20, 16, .75);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            font-size: .82rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .chip .i {
+            color: var(--green-2);
+            font-size: 1.2rem;
+        }
+
+        .chip.c1 {
+            top: 6%;
+            left: -2%;
+        }
+
+        .chip.c2 {
+            top: 44%;
+            right: -4%;
+            animation-delay: -2s;
+        }
+
+        .chip.c3 {
+            bottom: 6%;
+            left: 6%;
+            animation-delay: -4s;
+        }
+
+        @keyframes float {
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* =========================
+           FEATURED
+        ========================= */
+
+        .featured {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            border-radius: 26px;
+            overflow: hidden;
+            background: linear-gradient(
+                135deg,
+                rgba(16, 185, 129, .14),
+                rgba(255, 255, 255, .03)
+            );
+            border: 1px solid rgba(16, 185, 129, .35);
+            box-shadow: var(--shadow);
+        }
+
+        .featured .media {
+            min-height: 380px;
+        }
+
+        .featured .body {
+            padding: clamp(24px, 4vw, 52px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .featured h2 {
+            font-size: clamp(1.6rem, 3vw, 2.3rem);
+        }
+
+
+        /* =========================
+           MEDIA
+        ========================= */
+
+        .media {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(
+                135deg,
+                #0b3b2c,
+                #06140f
+            );
+            display: grid;
+            place-items: center;
+        }
+
+        .media .fb {
+            font-size: 3.4rem;
+            color: rgba(52, 211, 153, .55);
+        }
+
+        .media img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .6s ease;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-self: flex-start;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--green-2);
+            background: rgba(16, 185, 129, .14);
+            border: 1px solid rgba(16, 185, 129, .35);
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 16px;
+            font-size: .84rem;
+            align-items: center;
+        }
+
+        .meta span {
+            display: inline-flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+
+        /* =========================
+           CATEGORIES
+        ========================= */
+
+        .cats {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 4px 2px 10px;
+            scrollbar-width: thin;
+        }
+
+        .cat {
+            white-space: nowrap;
+            padding: 9px 20px;
+            border-radius: 999px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            color: var(--muted);
+            cursor: pointer;
+            font: 600 .9rem inherit;
+            transition: .2s;
+        }
+
+        .cat:hover {
+            color: #fff;
+            border-color: rgba(16, 185, 129, .5);
+        }
+
+        .cat.active {
+            background: var(--green);
+            border-color: var(--green);
+            color: #03150e;
+        }
+
+
+        /* =========================
+           ARTICLE GRID
+        ========================= */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fill,
+                minmax(270px, 1fr)
+            );
+            gap: 24px;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--r);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition:
+                transform .3s,
+                border-color .3s,
+                box-shadow .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(16, 185, 129, .5);
+            box-shadow:
+                var(--shadow),
+                0 0 0 1px rgba(16, 185, 129, .15);
+        }
+
+        .card .media {
+            aspect-ratio: 16 / 10;
+        }
+
+        .card:hover .media img {
+            transform: scale(1.08);
+        }
+
+        .card .body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            flex: 1;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+        }
+
+        .card p {
+            font-size: .92rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card .foot {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-top: 6px;
+        }
+
+        .empty {
+            display: none;
+            text-align: center;
+            padding: 46px 20px;
+            border: 1px dashed var(--line);
+            border-radius: var(--r);
+        }
+
+        .empty h3 {
+            margin-bottom: 6px;
+        }
+
+
+        /* =========================
+           RECOMMENDED
+        ========================= */
+
+        .rec {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .rec a {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding: 14px;
+            border-radius: var(--r);
+            background: var(--card);
+            border: 1px solid var(--line);
+            transition: .25s;
+            cursor: pointer;
+        }
+
+        .rec a:hover {
+            border-color: rgba(16, 185, 129, .5);
+            transform: translateY(-4px);
+        }
+
+        .rec .media {
+            width: 92px;
+            height: 92px;
+            border-radius: 14px;
+            flex: none;
+        }
+
+        .rec .media .fb {
+            font-size: 1.8rem;
+        }
+
+        .rec h4 {
+            font-size: 1rem;
+            margin: 6px 0 4px;
+        }
+
+        .rec .more {
+            font-size: .84rem;
+            font-weight: 600;
+            color: var(--green-2);
+        }
+
+
+        /* =========================
+           AI SECTION
+        ========================= */
+
+        .ai {
+            background: linear-gradient(
+                180deg,
+                transparent,
+                rgba(16, 185, 129, .07),
+                transparent
+            );
+        }
+
+        .ai .intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 44px;
+        }
+
+        .ai h2 {
+            font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+        }
+
+        .pts {
+            list-style: none;
+            display: grid;
+            gap: 14px;
+        }
+
+        .pts li {
+            display: flex;
+            gap: 14px;
+            padding: 16px;
+            border-radius: 14px;
+            background: var(--card);
+            border: 1px solid var(--line);
+        }
+
+        .pts .i {
+            font-size: 1.5rem;
+            color: var(--green-2);
+            margin-top: 2px;
+        }
+
+        .pts b {
+            color: #fff;
+            display: block;
+        }
+
+        .flow {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .node {
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            padding: 24px 16px;
+            border-radius: var(--r);
+            background: var(--card);
+            border: 1px solid var(--line);
+            color: #fff;
+            font-weight: 600;
+            transition: .25s;
+        }
+
+        .node:hover {
+            border-color: var(--green);
+            box-shadow: 0 0 30px rgba(16, 185, 129, .2);
+        }
+
+        .node .i {
+            display: block;
+            font-size: 2rem;
+            color: var(--green-2);
+            margin: 0 auto 10px;
+        }
+
+        .node small {
+            display: block;
+            color: var(--muted);
+            font-weight: 400;
+            margin-top: 4px;
+        }
+
+        .arrow {
+            align-self: center;
+            color: var(--green);
+            font-size: 1.6rem;
+        }
+
+        .arrow .i {
+            animation: nudge 1.6s ease-in-out infinite;
+        }
+
+        @keyframes nudge {
+            50% {
+                transform: translateX(5px);
+            }
+        }
+
+
+        /* =========================
+           HOW IT WORKS
+        ========================= */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: "";
+            position: absolute;
+            top: 34px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                var(--green-d),
+                var(--green),
+                var(--green-d)
+            );
+        }
+
+        .step {
+            position: relative;
+            text-align: center;
+            padding: 0 6px;
+        }
+
+        .step .ic {
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 1.6rem;
+            color: var(--green-2);
+            background: var(--bg-2);
+            border: 2px solid var(--green);
+            position: relative;
+            transition: .25s;
+        }
+
+        .step:hover .ic {
+            background: var(--green);
+            color: #03150e;
+            transform: scale(1.08);
+        }
+
+        .step h4 {
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .step p {
+            font-size: .88rem;
+        }
+
+
+        /* =========================
+           DISCLAIMER
+        ========================= */
+
+        .disc {
+            display: flex;
+            gap: 18px;
+            padding: 24px 28px;
+            border-radius: var(--r);
+            background: rgba(245, 158, 11, .06);
+            border: 1px solid rgba(245, 158, 11, .3);
+            border-left: 4px solid #f59e0b;
+        }
+
+        .disc .i {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            margin-top: 2px;
+        }
+
+        .disc h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+
+        /* =========================
+           NEWSLETTER
+        ========================= */
+
+        .news {
+            border-radius: 28px;
+            padding: clamp(32px, 5vw, 60px);
+            text-align: center;
+            background: linear-gradient(
+                135deg,
+                #065f46,
+                #0a2e22 60%,
+                #06140f
+            );
+            border: 1px solid rgba(52, 211, 153, .4);
+            box-shadow: 0 0 80px rgba(16, 185, 129, .15);
+        }
+
+        .news h2 {
+            font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+            margin-bottom: 10px;
+        }
+
+        .news p {
+            color: #c7e8dc;
+            max-width: 520px;
+            margin: 0 auto 26px;
+        }
+
+        .news form {
+            display: flex;
+            gap: 10px;
+            max-width: 520px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .news input {
+            flex: 1;
+            min-width: 220px;
+            padding: 13px 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            background: rgba(0, 0, 0, .35);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .news input:focus {
+            outline: none;
+            border-color: var(--green-2);
+            box-shadow: 0 0 0 4px rgba(52, 211, 153, .2);
+        }
+
+        .news .btn {
+            background: #fff;
+            color: #064e3b;
+        }
+
+        .news .btn:hover {
+            background: var(--green-2);
+        }
+
+        .msg {
+            min-height: 1.5em;
+            margin-top: 14px;
+            font-size: .92rem;
+        }
+
+        .msg.err {
+            color: #fca5a5;
+        }
+
+        .msg.ok {
+            color: #a7f3d0;
+        }
+
+
+        /* =========================
+           ARTICLE MODAL
+        ========================= */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+
+            display: grid;
+            place-items: center;
+
+            padding: 24px;
+
+            background: rgba(2, 6, 4, .82);
+            backdrop-filter: blur(7px);
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition:
+                opacity .3s ease,
+                visibility .3s ease;
+        }
+
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            position: relative;
+
+            width: min(840px, 100%);
+            max-height: 90vh;
+
+            display: flex;
+            flex-direction: column;
+
+            background: linear-gradient(
+                160deg,
+                #0b1b15,
+                #060d0a
+            );
+
+            border: 1px solid rgba(16, 185, 129, .4);
+            border-radius: 24px;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, .7),
+                0 0 60px rgba(16, 185, 129, .12);
+
+            transform: translateY(28px) scale(.97);
+
+            transition:
+                transform .35s cubic-bezier(.2, .8, .2, 1);
+
+            overflow: hidden;
+        }
+
+        .modal.open .modal-box {
+            transform: none;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 2;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            display: grid;
+            place-items: center;
+
+            background: rgba(16, 185, 129, .16);
+            border: 1px solid rgba(52, 211, 153, .5);
+
+            color: #fff;
+            font-size: 1.7rem;
+            line-height: 1;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+        .modal-close:hover {
+            background: var(--green);
+            color: #03150e;
+            transform: rotate(90deg);
+        }
+
+        .modal-scroll {
+            overflow-y: auto;
+            padding: clamp(24px, 4vw, 44px);
+
+            scrollbar-width: thin;
+            scrollbar-color: var(--green-d) transparent;
+        }
+
+        .modal-head {
+            padding-right: 55px;
+            padding-bottom: 22px;
+            margin-bottom: 22px;
+
+            border-bottom: 1px solid var(--line);
+
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-head h2 {
+            font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+        }
+
+        .art {
+            max-width: 68ch;
+            color: #c4cbd3;
+            font-size: 1.03rem;
+            line-height: 1.85;
+        }
+
+        .art h3 {
+            color: var(--green-2);
+            font-size: 1.2rem;
+            margin: 28px 0 10px;
+        }
+
+        .art p {
+            margin-bottom: 14px;
+        }
+
+        .art ul {
+            margin: 0 0 16px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .art li {
+            position: relative;
+            padding-left: 26px;
+            margin-bottom: 8px;
+        }
+
+        .art li::before {
+            content: "";
+
+            position: absolute;
+            left: 4px;
+            top: .72em;
+
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+            background: var(--green);
+        }
+
+        .art strong {
+            color: #fff;
+        }
+
+        .art .note {
+            margin-top: 26px;
+            padding: 14px 18px;
+
+            border-radius: 12px;
+
+            background: rgba(245, 158, 11, .07);
+            border: 1px solid rgba(245, 158, 11, .28);
+
+            font-size: .9rem;
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 991px) {
+
+            .hero .wrap,
+            .featured,
+            .ai .intro {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-art {
+                max-width: 340px;
+            }
+
+            .featured .media {
+                min-height: 260px;
+            }
+
+            .rec {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 26px;
+            }
+
+            .steps::before {
+                top: 0;
+                bottom: 0;
+                left: 34px;
+                right: auto;
+                width: 2px;
+                height: auto;
+            }
+
+            .step {
+                display: flex;
+                gap: 18px;
+                text-align: left;
+            }
+
+            .step .ic {
+                margin: 0;
+                flex: none;
+            }
+
+            .arrow {
+                display: none;
+            }
+        }
+
+        @media (max-width: 575px) {
+
+            section {
+                padding: 52px 0;
+            }
+
+            .disc {
+                flex-direction: column;
+            }
+
+            .modal {
+                padding: 10px;
+            }
+
+            .modal-box {
+                max-height: 94vh;
+                border-radius: 18px;
+            }
+
+            .modal-close {
+                top: 10px;
+                right: 10px;
+            }
+
+            .modal-scroll {
+                padding: 24px 20px;
+            }
+
+            .art {
+                font-size: 1rem;
+            }
+
+            .news form {
+                flex-direction: column;
+            }
+
+            .news input,
+            .news .btn {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    {% include 'navbar.html' %}
+
+
+    <main>
+
+        <!-- =========================
+             HERO
+        ========================== -->
+
+        <section class="hero">
+            <div class="wrap">
+
+                <div>
+
+                    <h1>MediSense Insights</h1>
+
+                    <p class="sub">
+                        Simple health knowledge, wellness guidance, and healthcare technology insights.
+                    </p>
+
+                    <p class="intro">
+                        Explore easy-to-read articles on everyday health, preventive care,
+                        and how machine learning is helping people understand their symptoms better.
+                    </p>
+
+                </div>
+
+
+                <div class="hero-art" aria-hidden="true">
+
+                    <div class="ring"></div>
+
+                    <div class="core">
+
+                        <svg viewBox="0 0 48 48">
+                            <path d="M3 26h10l5-12 8 22 6-14 3 4h10"></path>
+                        </svg>
+
+                    </div>
+
+                    <div class="chip c1">
+
+                        <svg class="i" viewBox="0 0 24 24">
+                            <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z"></path>
+                        </svg>
+
+                        Wellness
+
+                    </div>
+
+
+                    <div class="chip c2">
+
+                        <svg class="i" viewBox="0 0 24 24">
+                            <rect x="5" y="5" width="14" height="14" rx="2"></rect>
+                            <path d="M9 9h6v6H9zM9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path>
+                        </svg>
+
+                        AI Models
+
+                    </div>
+
+
+                    <div class="chip c3">
+
+                        <svg class="i" viewBox="0 0 24 24">
+                            <path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"></path>
+                            <path d="m9 12 2 2 4-4"></path>
+                        </svg>
+
+                        Preventive Care
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =========================
+             FEATURED
+        ========================== -->
+
+        <section style="padding-top:20px">
+
+            <div class="wrap">
+
+                <article class="featured" id="featured"></article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LATEST ARTICLES
+        ========================== -->
+
+        <section id="articles" style="padding-top:20px">
+
+            <div class="wrap">
+
+                <div class="sec-head">
+
+                    <h2>Latest Articles</h2>
+
+                    <p>
+                        Browse articles by topic.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="cats"
+                    id="cats"
+                    role="tablist"
+                    aria-label="Article categories">
+                </div>
+
+
+                <div
+                    class="grid"
+                    id="grid"
+                    style="margin-top:22px"
+                    aria-live="polite">
+                </div>
+
+
+                <div class="empty" id="empty">
+
+                    <h3>No articles found</h3>
+
+                    <p>
+                        Try a different keyword or choose another category.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             RECOMMENDED
+        ========================== -->
+
+        <section style="padding-top:20px">
+
+            <div class="wrap">
+
+                <div class="sec-head">
+
+                    <h2>Recommended For You</h2>
+
+                </div>
+
+
+                <div
+                    class="rec"
+                    id="rec">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             AI & HEALTHCARE
+        ========================== -->
+
+        <section class="ai">
+
+            <div class="wrap">
+
+                <div class="intro">
+
+                    <div>
+
+                        <h2>
+                            The Future of Healthcare Is Intelligent
+                        </h2>
+
+                        <p style="margin-top:14px">
+
+                            Machine learning learns from thousands of past cases.
+                            MediSense uses this idea to turn the symptoms you enter
+                            into helpful, easy-to-understand health information,
+                            and to point you toward the right next step.
+
+                        </p>
+
+                    </div>
+
+
+                    <ul class="pts">
+
+                        <li>
+
+                            <svg class="i" viewBox="0 0 24 24">
+                                <path d="M3 12h4l3-8 4 16 3-8h4"></path>
+                            </svg>
+
+                            <div>
+
+                                <b>Analyze symptoms</b>
+
+                                Models compare your symptoms against learned medical data.
+
+                            </div>
+
+                        </li>
+
+
+                        <li>
+
+                            <svg class="i" viewBox="0 0 24 24">
+                                <circle cx="6" cy="6" r="2.5"></circle>
+                                <circle cx="18" cy="8" r="2.5"></circle>
+                                <circle cx="12" cy="18" r="2.5"></circle>
+                                <path d="m8 7 8 1M7 8l4 8M17 10l-4 6"></path>
+                            </svg>
+
+                            <div>
+
+                                <b>Identify patterns</b>
+
+                                Spots combinations of signs that are easy to miss.
+
+                            </div>
+
+                        </li>
+
+
+                        <li>
+
+                            <svg class="i" viewBox="0 0 24 24">
+                                <path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"></path>
+                                <path d="M12 9v6M9 12h6"></path>
+                            </svg>
+
+                            <div>
+
+                                <b>Support professionals</b>
+
+                                Adds information to, never replaces,
+                                a doctor's judgment.
+
+                            </div>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="flow">
+
+                    <div class="node">
+
+                        <svg class="i" viewBox="0 0 24 24">
+                            <path d="M9 3h6v5l4 9a3 3 0 0 1-3 4H8a3 3 0 0 1-3-4l4-9z"></path>
+                        </svg>
+
+                        Symptoms
+
+                        <small>Your input</small>
+
+                    </div>
+
+
+                    <div class="arrow">
+
+                        <svg class="i" viewBox="0 0 24 24">
+                            <path d="M5 12h14m-5-5 5 5-5 5"></path>
+                        </svg>
+
+                    </div>
+
+
+                    <div class="node">
+
+                        <svg class="i" viewBox="0 0 24 24">
+                            <rect x="5" y="5" width="14" height="14" rx="2"></rect>
+                            <path d="M9 9h6v6H9zM9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path>
+                        </svg>
+
+                        Machine Learning Model
+
+                        <small>Pattern analysis</small>
+
+                    </div>
+
+
+                    <div class="arrow">
+
+                        <svg class="i" viewBox="0 0 24 24">
+                            <path d="M5 12h14m-5-5 5 5-5 5"></path>
+                        </svg>
+
+                    </div>
+
+
+                    <div class="node">
+
+                        <svg class="i" viewBox="0 0 24 24">
+                            <path d="M3 12h4l3-8 4 16 3-8h4"></path>
+                        </svg>
+
+                        Disease Prediction
+
+                        <small>Possible condition</small>
+
+                    </div>
+
+
+                    <div class="arrow">
+
+                        <svg class="i" viewBox="0 0 24 24">
+                            <path d="M5 12h14m-5-5 5 5-5 5"></path>
+                        </svg>
+
+                    </div>
+
+
+                    <div class="node">
+
+                        <svg class="i" viewBox="0 0 24 24">
+                            <path d="M5 4h10l4 4v12H5z"></path>
+                            <path d="M14 4v5h5M8 13h8M8 17h6"></path>
+                        </svg>
+
+                        Health Information
+
+                        <small>Clear guidance</small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             HOW MEDISENSE WORKS
+        ========================== -->
+
+        <section id="how">
+
+            <div class="wrap">
+
+                <div
+                    class="sec-head"
+                    style="text-align:center">
+
+                    <h2>How MediSense Works</h2>
+
+                    <p>
+                        From symptoms to information in five simple steps.
+                    </p>
+
+                </div>
+
+
+                <div class="steps">
+
+                    <div class="step">
+
+                        <div class="ic">
+
+                            <svg class="i" viewBox="0 0 24 24">
+                                <path d="M4 20h4L19 9l-4-4L4 16z"></path>
+                                <path d="m13 7 4 4"></path>
+                            </svg>
+
+                        </div>
+
+                        <div>
+
+                            <h4>Enter symptoms</h4>
+
+                            <p>
+                                Select or type what you are feeling.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="ic">
+
+                            <svg class="i" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"></path>
+                            </svg>
+
+                        </div>
+
+                        <div>
+
+                            <h4>MediSense processes</h4>
+
+                            <p>
+                                Your input is cleaned and prepared.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="ic">
+
+                            <svg class="i" viewBox="0 0 24 24">
+                                <rect x="5" y="5" width="14" height="14" rx="2"></rect>
+                                <path d="M9 9h6v6H9zM9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path>
+                            </svg>
+
+                        </div>
+
+                        <div>
+
+                            <h4>Model analyzes</h4>
+
+                            <p>
+                                The ML model studies the data.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="ic">
+
+                            <svg class="i" viewBox="0 0 24 24">
+                                <path d="M3 12h4l3-8 4 16 3-8h4"></path>
+                            </svg>
+
+                        </div>
+
+                        <div>
+
+                            <h4>Disease predicted</h4>
+
+                            <p>
+                                A possible condition is suggested.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="ic">
+
+                            <svg class="i" viewBox="0 0 24 24">
+                                <path d="M5 4h10l4 4v12H5z"></path>
+                                <path d="M14 4v5h5M8 13h8M8 17h6"></path>
+                            </svg>
+
+                        </div>
+
+                        <div>
+
+                            <h4>Information shown</h4>
+
+                            <p>
+                                Relevant health details are displayed.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             DISCLAIMER
+        ========================== -->
+
+        <section style="padding:10px 0 40px">
+
+            <div class="wrap">
+
+                <div
+                    class="disc"
+                    role="note">
+
+                    <svg class="i" viewBox="0 0 24 24">
+                        <path d="M12 3 2.5 20h19z"></path>
+                        <path d="M12 10v5M12 18h.01"></path>
+                    </svg>
+
+                    <div>
+
+                        <h3>Medical Disclaimer</h3>
+
+                        <p>
+                            MediSense provides informational and educational content
+                            and should not be considered a substitute for professional
+                            medical advice, diagnosis, or treatment. Always consult a
+                            qualified healthcare professional for medical concerns.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             NEWSLETTER
+        ========================== -->
+
+        <section style="padding-top:20px">
+
+            <div class="wrap">
+
+                <div class="news">
+
+                    <h2>
+                        Stay Updated With MediSense
+                    </h2>
+
+                    <p>
+                        Get the latest health, wellness, and healthcare technology
+                        insights directly in your inbox.
+                    </p>
+
+                    <form
+                        id="nl"
+                        novalidate>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email address"
+                            aria-label="Email address"
+                            required
+                        >
+
+                        <button
+                            class="btn"
+                            type="submit">
+                            Subscribe
+                        </button>
+
+                    </form>
+
+                    <div
+                        class="msg"
+                        id="nlmsg"
+                        role="status">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    {% include 'footer.html' %}
+
+
+    <!-- =========================
+         ARTICLE MODAL
+    ========================== -->
+
+    <div
+        class="modal"
+        id="modal"
+        aria-hidden="true">
+
+        <div
+            class="modal-box"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modalTitle">
+
+            <button
+                type="button"
+                class="modal-close"
+                id="modalClose"
+                aria-label="Close article">
+                &times;
+            </button>
+
+
+            <div
+                class="modal-scroll"
+                id="modalScroll"
+                tabindex="0">
+
+                <div
+                    class="modal-head"
+                    id="modalHead">
+                </div>
+
+                <div
+                    class="art"
+                    id="modalBody">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* =========================
+           CONFIG
+        ========================== */
+
+        const IMG =
+            "{{ url_for('static', filename='images/blog/') }}";
+
+
+        /* =========================
+           ICONS
+        ========================== */
+
+        const ICONS = {
+
+            ai: `
+                <rect x="5" y="5" width="14" height="14" rx="2"></rect>
+                <path d="M9 9h6v6H9zM9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path>
+            `,
+
+            heart: `
+                <path d="M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z"></path>
+            `,
+
+            pill: `
+                <rect
+                    x="3"
+                    y="9"
+                    width="18"
+                    height="6"
+                    rx="3"
+                    transform="rotate(-35 12 12)">
+                </rect>
+                <path d="m9 9 6 6"></path>
+            `,
+
+            leaf: `
+                <path d="M5 19C5 9 11 4 20 4c0 9-5 15-15 15zM5 19 13 11"></path>
+            `,
+
+            moon: `
+                <path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"></path>
+            `,
+
+            shield: `
+                <path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"></path>
+                <path d="m9 12 2 2 4-4"></path>
+            `,
+
+            pulse: `
+                <path d="M3 12h4l3-8 4 16 3-8h4"></path>
+            `,
+
+            steth: `
+                <path d="M6 3v6a4 4 0 0 0 8 0V3M10 13v2a5 5 0 0 0 10 0v-2"></path>
+                <circle cx="20" cy="11" r="2"></circle>
+            `
+        };
+
+
+        const icon = name => `
+            <svg
+                class="i"
+                viewBox="0 0 24 24"
+                aria-hidden="true">
+                ${ICONS[name]}
+            </svg>
+        `;
+
+
+        const CAL = `
+            <svg class="i" viewBox="0 0 24 24">
+                <rect
+                    x="3"
+                    y="5"
+                    width="18"
+                    height="16"
+                    rx="2">
+                </rect>
+
+                <path d="M3 10h18M8 3v4M16 3v4"></path>
+            </svg>
+        `;
+
+
+        const CLK = `
+            <svg class="i" viewBox="0 0 24 24">
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="9">
+                </circle>
+
+                <path d="M12 7v5l3 2"></path>
+            </svg>
+        `;
+
+
+        /* =========================
+           ARTICLE DATA
+        ========================== */
+
+        const ARTICLES = [
+
+            {
+                slug: "how-ai-is-transforming-healthcare",
+                title: "How AI Is Transforming Healthcare",
+                cat: "AI & Healthcare",
+                icon: "ai",
+                img: "ai-healthcare.jpg",
+                date: "Oct 02, 2026",
+                time: "6 min read",
+
+                desc:
+                    "From faster screening to smarter record analysis, artificial intelligence is changing how care is delivered. See what is already working today and what comes next for patients and doctors."
+            },
+
+            {
+                slug: "understanding-common-health-symptoms",
+                title: "Understanding Common Health Symptoms",
+                cat: "Health & Wellness",
+                icon: "steth",
+                img: "symptoms.jpg",
+                date: "Sep 28, 2026",
+                time: "5 min read",
+
+                desc:
+                    "Fever, fatigue, headaches and more: learn what everyday symptoms can mean, when they are usually harmless, and when it is time to speak with a doctor."
+            },
+
+            {
+                slug: "how-machine-learning-predicts-diseases",
+                title: "How Machine Learning Helps Predict Diseases",
+                cat: "AI & Healthcare",
+                icon: "pulse",
+                img: "ml-prediction.jpg",
+                date: "Sep 24, 2026",
+                time: "7 min read",
+
+                desc:
+                    "Machine learning models find patterns in symptoms and health data. Here is a simple, jargon-free look at how they are trained and how they support early detection."
+            },
+
+            {
+                slug: "importance-of-a-balanced-diet",
+                title: "Importance of a Balanced Diet",
+                cat: "Nutrition",
+                icon: "leaf",
+                img: "diet.jpg",
+                date: "Sep 19, 2026",
+                time: "4 min read",
+
+                desc:
+                    "A balanced plate supports energy, immunity and long-term health. Discover the food groups your body needs and easy ways to build better daily meals."
+            },
+
+            {
+                slug: "why-regular-health-checkups-matter",
+                title: "Why Regular Health Checkups Matter",
+                cat: "Preventive Care",
+                icon: "shield",
+                img: "checkups.jpg",
+                date: "Sep 14, 2026",
+                time: "4 min read",
+
+                desc:
+                    "Many conditions show no early signs. Routine checkups help catch problems sooner, when they are simpler to treat. Learn which tests to schedule and how often."
+            },
+
+            {
+                slug: "understanding-medicines-and-safe-usage",
+                title: "Understanding Medicines and Safe Usage",
+                cat: "Medicines",
+                icon: "pill",
+                img: "medicines.jpg",
+                date: "Sep 09, 2026",
+                time: "5 min read",
+
+                desc:
+                    "Reading labels, following dosage, and knowing about interactions can prevent serious mistakes. A practical guide to using medicines safely at home."
+            },
+
+            {
+                slug: "importance-of-sleep-for-good-health",
+                title: "Importance of Sleep for Good Health",
+                cat: "Health & Wellness",
+                icon: "moon",
+                img: "sleep.jpg",
+                date: "Sep 03, 2026",
+                time: "4 min read",
+
+                desc:
+                    "Quality sleep protects your heart, mood and memory. Understand how much you need and which simple habits help you rest better every night."
+            },
+
+            {
+                slug: "preventive-healthcare-small-habits",
+                title: "Preventive Healthcare: Small Habits, Big Benefits",
+                cat: "Preventive Care",
+                icon: "heart",
+                img: "preventive.jpg",
+                date: "Aug 28, 2026",
+                time: "5 min read",
+
+                desc:
+                    "Walking daily, drinking water and managing stress add up over time. See how small, consistent habits lower your risk of many common illnesses."
+            }
+
+        ];
+
+
+        const CATS = [
+            "All",
+            "Health & Wellness",
+            "Diseases",
+            "Medicines",
+            "Nutrition",
+            "Mental Health",
+            "AI & Healthcare",
+            "Preventive Care"
+        ];
+
+
+        /* =========================
+           HELPERS
+        ========================== */
+
+        const $ = selector =>
+            document.querySelector(selector);
+
+
+        const media = article => `
+
+            <div class="media">
+
+                <span class="fb">
+                    ${icon(article.icon)}
+                </span>
+
+                <img
+                    src="${IMG}${article.img}"
+                    alt="${article.title}"
+                    loading="lazy"
+                    onerror="this.style.display='none'">
+
+            </div>
+
+        `;
+
+
+        const meta = article => `
+
+            <div class="meta">
+
+                <span>
+                    ${CAL}
+                    ${article.date}
+                </span>
+
+                <span>
+                    ${CLK}
+                    ${article.time}
+                </span>
+
+            </div>
+
+        `;
+
+
+        /* =========================
+           FEATURED ARTICLE
+        ========================== */
+
+        const featured = ARTICLES[0];
+
+        $("#featured").innerHTML = `
+
+            ${media(featured)}
+
+            <div class="body">
+
+                <span class="badge">
+                    ${featured.cat}
+                </span>
+
+                <h2>
+                    ${featured.title}
+                </h2>
+
+                <p>
+                    ${featured.desc}
+                </p>
+
+                ${meta(featured)}
+
+                <button
+                    type="button"
+                    class="btn btn-g"
+                    data-slug="${featured.slug}"
+                    style="align-self:flex-start">
+
+                    Read More →
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        /* =========================
+           CATEGORIES
+        ========================== */
+
+        let activeCat = "All";
+
+
+        $("#cats").innerHTML = CATS.map(category => `
+
+            <button
+                class="cat ${category === "All" ? "active" : ""}"
+                role="tab"
+                aria-selected="${category === "All"}"
+                data-cat="${category}">
+
+                ${category}
+
+            </button>
+
+        `).join("");
+
+
+        $("#cats").addEventListener("click", event => {
+
+            const button =
+                event.target.closest(".cat");
+
+            if (!button) {
+                return;
+            }
+
+            activeCat =
+                button.dataset.cat;
+
+
+            document
+                .querySelectorAll(".cat")
+                .forEach(item => {
+
+                    const active =
+                        item === button;
+
+                    item.classList.toggle(
+                        "active",
+                        active
+                    );
+
+                    item.setAttribute(
+                        "aria-selected",
+                        active
+                    );
+
+                });
+
+
+            renderArticles();
+
+        });
+
+
+        /* =========================
+           ARTICLE GRID
+        ========================== */
+
+        function renderArticles() {
+
+
+            const list =
+                ARTICLES.filter(article => {
+
+                    const categoryMatch =
+                        activeCat === "All" ||
+                        article.cat === activeCat;
+
+
+                    return categoryMatch;
+
+                });
+
+
+            $("#grid").innerHTML =
+                list.map(article => `
+
+                    <article class="card">
+
+                        ${media(article)}
+
+                        <div class="body">
+
+                            <span class="badge">
+                                ${article.cat}
+                            </span>
+
+                            <h3>
+                                ${article.title}
+                            </h3>
+
+                            <p>
+                                ${article.desc}
+                            </p>
+
+
+                            <div class="foot">
+
+                                ${meta(article)}
+
+                                <button
+                                    type="button"
+                                    class="btn btn-o"
+                                    data-slug="${article.slug}"
+                                    aria-label="Read more: ${article.title}">
+
+                                    Read More →
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                `).join("");
+
+
+            $("#empty").style.display =
+                list.length
+                    ? "none"
+                    : "block";
+
+        }
+
+
+        renderArticles();
+
+
+        /* =========================
+           RECOMMENDED ARTICLES
+        ========================== */
+
+        const recommended = [
+            ARTICLES[3],
+            ARTICLES[4],
+            ARTICLES[6]
+        ];
+
+
+        $("#rec").innerHTML =
+            recommended.map(article => `
+
+                <a
+                    href="#"
+                    data-slug="${article.slug}"
+                    aria-label="Read article: ${article.title}">
+
+                    ${media(article)}
+
+                    <div>
+
+                        <span class="badge">
+                            ${article.cat}
+                        </span>
+
+                        <h4>
+                            ${article.title}
+                        </h4>
+
+                        <div class="meta">
+
+                            <span>
+                                ${CLK}
+                                ${article.time}
+                            </span>
+
+                        </div>
+
+                        <span class="more">
+                            Read More →
+                        </span>
+
+                    </div>
+
+                </a>
+
+            `).join("");
+
+
+        /* =========================
+           ARTICLE CONTENT
+        ========================== */
+
+        const ARTICLE_BODY = {
+
+            "how-ai-is-transforming-healthcare": `
+
+                <p>
+                    Artificial intelligence (AI) is software that learns patterns
+                    from large amounts of data. In healthcare, it helps people
+                    and doctors work faster, spot problems earlier and make
+                    better use of limited time.
+                </p>
+
+                <h3>Where AI is already helping</h3>
+
+                <ul>
+
+                    <li>
+                        <strong>Medical imaging:</strong>
+                        Models can highlight suspicious areas on X-rays,
+                        CT scans and other medical images so specialists
+                        can review them sooner.
+                    </li>
+
+                    <li>
+                        <strong>Record analysis:</strong>
+                        AI can scan long patient histories and identify
+                        useful patterns.
+                    </li>
+
+                    <li>
+                        <strong>Hospital planning:</strong>
+                        Forecasting tools can help hospitals plan beds
+                        and staff.
+                    </li>
+
+                    <li>
+                        <strong>Health information:</strong>
+                        Tools like MediSense can turn entered symptoms
+                        into easy-to-understand health information.
+                    </li>
+
+                </ul>
+
+
+                <h3>Why it matters for patients</h3>
+
+                <p>
+                    Faster screening can support earlier treatment.
+                    Routine paperwork handled by software can also give
+                    doctors more time to listen, examine and explain.
+                </p>
+
+
+                <h3>Limits and responsibilities</h3>
+
+                <p>
+                    AI is only as good as the data used to train it.
+                    If data is incomplete or unbalanced, results may
+                    be less accurate for some people.
+                    Patient privacy must also be protected.
+                </p>
+
+
+                <h3>What comes next</h3>
+
+                <ul>
+
+                    <li>
+                        More personalised prevention support.
+                    </li>
+
+                    <li>
+                        Better early-warning tools.
+                    </li>
+
+                    <li>
+                        More transparent and explainable AI systems.
+                    </li>
+
+                </ul>
+
+
+                <div class="note">
+                    This article is for general education only and is not
+                    medical advice. Please consult a qualified healthcare
+                    professional about your own health.
+                </div>
+
+            `,
+
+
+            "understanding-common-health-symptoms": `
+
+                <p>
+                    A symptom is a signal from your body that something
+                    may need attention. Many everyday symptoms are mild
+                    and temporary, but understanding changes in your body
+                    can help you decide when professional advice is needed.
+                </p>
+
+
+                <h3>Common symptoms</h3>
+
+                <ul>
+
+                    <li>
+                        <strong>Fever:</strong>
+                        Often associated with infections.
+                    </li>
+
+                    <li>
+                        <strong>Fatigue:</strong>
+                        Can be related to poor sleep, stress or other conditions.
+                    </li>
+
+                    <li>
+                        <strong>Headache:</strong>
+                        Can occur with dehydration, tension or lack of rest.
+                    </li>
+
+                    <li>
+                        <strong>Cough:</strong>
+                        May occur with infections, allergies or irritation.
+                    </li>
+
+                    <li>
+                        <strong>Stomach upset:</strong>
+                        Can have many possible causes including food,
+                        infections or stress.
+                    </li>
+
+                </ul>
+
+
+                <h3>Track your symptoms</h3>
+
+                <p>
+                    Write down when a symptom started, how strong it is,
+                    what makes it better or worse and whether other symptoms
+                    appear at the same time.
+                </p>
+
+
+                <h3>When to seek medical help</h3>
+
+                <ul>
+
+                    <li>
+                        Chest pain or difficulty breathing.
+                    </li>
+
+                    <li>
+                        Sudden weakness or confusion.
+                    </li>
+
+                    <li>
+                        Severe or sudden unusual headache.
+                    </li>
+
+                    <li>
+                        Symptoms that continue getting worse.
+                    </li>
+
+                </ul>
+
+
+                <div class="note">
+                    This article is for general education only and is not
+                    medical advice.
+                </div>
+
+            `,
+
+
+            "how-machine-learning-predicts-diseases": `
+
+                <p>
+                    Machine learning is a method of teaching computers
+                    to recognise patterns using examples. In healthcare,
+                    models can learn from large datasets containing
+                    symptoms, test results and confirmed conditions.
+                </p>
+
+
+                <h3>How a model is built</h3>
+
+                <ul>
+
+                    <li>
+                        <strong>Collect data:</strong>
+                        Relevant health information is gathered and cleaned.
+                    </li>
+
+                    <li>
+                        <strong>Train:</strong>
+                        The model learns relationships between inputs
+                        and known outcomes.
+                    </li>
+
+                    <li>
+                        <strong>Test:</strong>
+                        The model is checked using data it has not seen before.
+                    </li>
+
+                    <li>
+                        <strong>Improve:</strong>
+                        Errors are analysed and the model can be refined.
+                    </li>
+
+                </ul>
+
+
+                <h3>What happens when symptoms are entered?</h3>
+
+                <p>
+                    The model compares the provided symptoms with patterns
+                    learned during training and identifies possible matches.
+                    The result should be considered a possibility rather
+                    than a confirmed diagnosis.
+                </p>
+
+
+                <h3>Why machine learning is useful</h3>
+
+                <ul>
+
+                    <li>
+                        It can identify complex patterns.
+                    </li>
+
+                    <li>
+                        It can process information quickly.
+                    </li>
+
+                    <li>
+                        It can support early health awareness.
+                    </li>
+
+                </ul>
+
+
+                <div class="note">
+                    Machine learning predictions should not replace
+                    professional medical diagnosis.
+                </div>
+
+            `,
+
+
+            "importance-of-a-balanced-diet": `
+
+                <p>
+                    A balanced diet provides the nutrients your body needs
+                    for energy, growth, repair and normal body functions.
+                    A healthy diet is about variety and balance rather
+                    than perfect meals.
+                </p>
+
+
+                <h3>Main food groups</h3>
+
+                <ul>
+
+                    <li>
+                        <strong>Vegetables and fruits:</strong>
+                        Provide vitamins, minerals and fibre.
+                    </li>
+
+                    <li>
+                        <strong>Whole grains:</strong>
+                        Provide energy and fibre.
+                    </li>
+
+                    <li>
+                        <strong>Protein:</strong>
+                        Pulses, eggs, fish, meat, dairy, nuts and seeds
+                        help support muscles and tissues.
+                    </li>
+
+                    <li>
+                        <strong>Healthy fats:</strong>
+                        Nuts, seeds and suitable cooking oils can form
+                        part of a balanced diet.
+                    </li>
+
+                </ul>
+
+
+                <h3>Healthy eating habits</h3>
+
+                <ul>
+
+                    <li>
+                        Include vegetables and fruits regularly.
+                    </li>
+
+                    <li>
+                        Prefer whole grains where possible.
+                    </li>
+
+                    <li>
+                        Limit highly processed foods.
+                    </li>
+
+                    <li>
+                        Reduce excess salt and added sugar.
+                    </li>
+
+                    <li>
+                        Drink enough water.
+                    </li>
+
+                </ul>
+
+
+                <h3>Getting started</h3>
+
+                <p>
+                    Start with small changes. You could add fruit to
+                    breakfast, include more vegetables with lunch,
+                    or replace sugary drinks with water.
+                </p>
+
+
+                <div class="note">
+                    If you have a medical condition or specific dietary
+                    needs, consult a qualified healthcare professional
+                    or registered dietitian.
+                </div>
+
+            `,
+
+
+            "why-regular-health-checkups-matter": `
+
+                <p>
+                    A health checkup allows a healthcare professional
+                    to review your health even when you feel well.
+                    Some conditions may develop without obvious symptoms.
+                </p>
+
+
+                <h3>Why checkups matter</h3>
+
+                <ul>
+
+                    <li>
+                        <strong>Early detection:</strong>
+                        Some health problems can be identified before
+                        noticeable symptoms appear.
+                    </li>
+
+                    <li>
+                        <strong>Tracking:</strong>
+                        Regular measurements can show changes over time.
+                    </li>
+
+                    <li>
+                        <strong>Prevention:</strong>
+                        Doctors can recommend appropriate lifestyle
+                        changes and screenings.
+                    </li>
+
+                    <li>
+                        <strong>Questions:</strong>
+                        Checkups provide an opportunity to discuss
+                        health concerns.
+                    </li>
+
+                </ul>
+
+
+                <h3>Common checks</h3>
+
+                <ul>
+
+                    <li>Blood pressure.</li>
+                    <li>Blood sugar when appropriate.</li>
+                    <li>Cholesterol when appropriate.</li>
+                    <li>Weight and general health measurements.</li>
+                    <li>Age and risk-based screenings.</li>
+
+                </ul>
+
+
+                <h3>Preparing for a checkup</h3>
+
+                <p>
+                    Make a list of medicines, supplements, symptoms
+                    and important family health history before your visit.
+                </p>
+
+
+                <div class="note">
+                    The right checkup schedule depends on your age,
+                    health history and individual risk factors.
+                </div>
+
+            `,
+
+
+            "understanding-medicines-and-safe-usage": `
+
+                <p>
+                    Medicines can treat illnesses and relieve symptoms,
+                    but they should be used correctly. Following instructions
+                    can help reduce avoidable medicine-related problems.
+                </p>
+
+
+                <h3>Read the label</h3>
+
+                <ul>
+
+                    <li>
+                        Check the medicine name and strength.
+                    </li>
+
+                    <li>
+                        Follow the recommended dose.
+                    </li>
+
+                    <li>
+                        Check expiry dates.
+                    </li>
+
+                    <li>
+                        Read warnings and possible side effects.
+                    </li>
+
+                </ul>
+
+
+                <h3>Safe medicine habits</h3>
+
+                <ul>
+
+                    <li>
+                        Follow the prescription or professional advice.
+                    </li>
+
+                    <li>
+                        Do not share prescription medicines.
+                    </li>
+
+                    <li>
+                        Tell your doctor about other medicines and supplements.
+                    </li>
+
+                    <li>
+                        Avoid using medicines for long periods without
+                        appropriate professional guidance.
+                    </li>
+
+                </ul>
+
+
+                <h3>Medicine interactions</h3>
+
+                <p>
+                    Some medicines can affect the way other medicines work.
+                    Certain foods, drinks and supplements may also interact
+                    with medicines.
+                </p>
+
+
+                <h3>Storage</h3>
+
+                <ul>
+
+                    <li>
+                        Keep medicines away from direct sunlight.
+                    </li>
+
+                    <li>
+                        Store medicines safely away from children.
+                    </li>
+
+                    <li>
+                        Follow local guidance for disposing of expired medicines.
+                    </li>
+
+                </ul>
+
+
+                <div class="note">
+                    If you experience a serious or unusual reaction after
+                    taking medicine, seek appropriate medical help.
+                </div>
+
+            `,
+
+
+            "importance-of-sleep-for-good-health": `
+
+                <p>
+                    Sleep is an important part of maintaining physical
+                    and mental health. During sleep, the body rests and
+                    the brain processes information and memories.
+                </p>
+
+
+                <h3>How much sleep is needed?</h3>
+
+                <ul>
+
+                    <li>
+                        <strong>Adults:</strong>
+                        Generally at least 7 hours.
+                    </li>
+
+                    <li>
+                        <strong>Teenagers:</strong>
+                        Around 8 to 10 hours.
+                    </li>
+
+                    <li>
+                        <strong>Children:</strong>
+                        Usually need more sleep depending on age.
+                    </li>
+
+                </ul>
+
+
+                <h3>Benefits of good sleep</h3>
+
+                <ul>
+
+                    <li>Better concentration and memory.</li>
+                    <li>Improved mood.</li>
+                    <li>Support for the immune system.</li>
+                    <li>Better overall physical recovery.</li>
+
+                </ul>
+
+
+                <h3>Better sleep habits</h3>
+
+                <ul>
+
+                    <li>
+                        Keep a regular sleep schedule.
+                    </li>
+
+                    <li>
+                        Keep your bedroom comfortable and quiet.
+                    </li>
+
+                    <li>
+                        Reduce screen use before sleeping.
+                    </li>
+
+                    <li>
+                        Avoid excessive caffeine late in the day.
+                    </li>
+
+                    <li>
+                        Stay physically active during the day.
+                    </li>
+
+                </ul>
+
+
+                <h3>When to seek help</h3>
+
+                <p>
+                    If you regularly have difficulty sleeping or remain
+                    very tired despite enough time in bed, discuss the
+                    problem with a healthcare professional.
+                </p>
+
+
+                <div class="note">
+                    This article is for general education and does not
+                    replace professional medical advice.
+                </div>
+
+            `,
+
+
+            "preventive-healthcare-small-habits": `
+
+                <p>
+                    Preventive healthcare focuses on reducing health risks
+                    before serious problems develop. Small habits performed
+                    consistently can contribute to better long-term health.
+                </p>
+
+
+                <h3>Daily habits that help</h3>
+
+                <ul>
+
+                    <li>
+                        <strong>Stay active:</strong>
+                        Regular walking, cycling or other physical activity
+                        supports overall health.
+                    </li>
+
+                    <li>
+                        <strong>Stay hydrated:</strong>
+                        Drink water regularly throughout the day.
+                    </li>
+
+                    <li>
+                        <strong>Eat well:</strong>
+                        Include vegetables, fruits, whole grains and
+                        suitable protein sources.
+                    </li>
+
+                    <li>
+                        <strong>Sleep:</strong>
+                        Maintain a regular and sufficient sleep schedule.
+                    </li>
+
+                    <li>
+                        <strong>Manage stress:</strong>
+                        Relaxation, hobbies and social support can help.
+                    </li>
+
+                </ul>
+
+
+                <h3>Protect yourself</h3>
+
+                <ul>
+
+                    <li>
+                        Follow recommended vaccination schedules.
+                    </li>
+
+                    <li>
+                        Maintain good hand hygiene.
+                    </li>
+
+                    <li>
+                        Avoid tobacco.
+                    </li>
+
+                    <li>
+                        Maintain dental hygiene.
+                    </li>
+
+                    <li>
+                        Use suitable sun protection.
+                    </li>
+
+                </ul>
+
+
+                <h3>Do not skip health checkups</h3>
+
+                <p>
+                    Regular checkups and appropriate screenings can help
+                    identify health problems early. Ask your healthcare
+                    professional which checks are suitable for your age
+                    and personal risk factors.
+                </p>
+
+
+                <h3>Start small</h3>
+
+                <p>
+                    Choose one or two realistic habits and practise them
+                    consistently. Small improvements are often easier
+                    to maintain than sudden major lifestyle changes.
+                </p>
+
+
+                <div class="note">
+                    This article is for general education only and is not
+                    medical advice.
+                </div>
+
+            `
+
+        };
+
+
+        /* =========================
+           MODAL
+        ========================== */
+
+        const modal =
+            $("#modal");
+
+        const modalScroll =
+            $("#modalScroll");
+
+        const modalHead =
+            $("#modalHead");
+
+        const modalBody =
+            $("#modalBody");
+
+        const modalClose =
+            $("#modalClose");
+
+
+        let lastFocus = null;
+
+
+        function openArticle(slug) {
+
+            const article =
+                ARTICLES.find(
+                    item => item.slug === slug
+                );
+
+
+            if (!article) {
+                return;
+            }
+
+
+            modalHead.innerHTML = `
+
+                <span class="badge">
+                    ${article.cat}
+                </span>
+
+                <h2 id="modalTitle">
+                    ${article.title}
+                </h2>
+
+                ${meta(article)}
+
+            `;
+
+
+            modalBody.innerHTML =
+                ARTICLE_BODY[slug] ||
+                `<p>${article.desc}</p>`;
+
+
+            modalScroll.scrollTop = 0;
+
+
+            lastFocus =
+                document.activeElement;
+
+
+            document.body.classList.add(
+                "modal-open"
+            );
+
+
+            modal.classList.add(
+                "open"
+            );
+
+
+            modal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+
+            modalClose.focus();
+
+        }
+
+
+        function closeArticle() {
+
+            if (!modal.classList.contains("open")) {
+                return;
+            }
+
+
+            modal.classList.remove(
+                "open"
+            );
+
+
+            modal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+
+            document.body.classList.remove(
+                "modal-open"
+            );
+
+
+            if (
+                lastFocus &&
+                typeof lastFocus.focus === "function"
+            ) {
+                lastFocus.focus();
+            }
+
+        }
+
+
+        /* =========================
+           OPEN ARTICLE
+           Works for:
+           Featured
+           Latest Articles
+           Recommended
+        ========================== */
+
+        document.addEventListener(
+            "click",
+            event => {
+
+                const target =
+                    event.target.closest(
+                        "[data-slug]"
+                    );
+
+
+                if (!target) {
+                    return;
+                }
+
+
+                event.preventDefault();
+
+
+                openArticle(
+                    target.dataset.slug
+                );
+
+            }
+        );
+
+
+        /* =========================
+           CLOSE BUTTON
+        ========================== */
+
+        modalClose.addEventListener(
+            "click",
+            closeArticle
+        );
+
+
+        /* =========================
+           CLOSE ON OVERLAY CLICK
+        ========================== */
+
+        modal.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target === modal
+                ) {
+                    closeArticle();
+                }
+
+            }
+        );
+
+
+        /* =========================
+           ESCAPE KEY
+        ========================== */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape" &&
+                    modal.classList.contains("open")
+                ) {
+
+                    closeArticle();
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           NEWSLETTER
+        ========================== */
+
+        $("#nl").addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+
+                const email =
+                    $("#email")
+                        .value
+                        .trim();
+
+
+                const message =
+                    $("#nlmsg");
+
+
+                const valid =
+                    /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+                        .test(email);
+
+
+                message.className =
+                    "msg " +
+                    (valid ? "ok" : "err");
+
+
+                if (!email) {
+
+                    message.textContent =
+                        "Email address is required.";
+
+                    return;
+                }
+
+
+                if (!valid) {
+
+                    message.textContent =
+                        "Please enter a valid email address.";
+
+                    return;
+                }
+
+
+                message.textContent =
+                    "Thank you for subscribing to MediSense Insights.";
+
+
+                event.target.reset();
+
+            }
+        );
+
+    </script>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact - MediSense</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #050807;
+            color: #9aa9a3;
+        }
+
+        /* =========================
+           CONTACT SECTION
+        ========================== */
+
+        .contact-section {
+            padding: 85px 0 95px;
+            min-height: calc(100vh - 100px);
+        }
+
+        .contact-heading {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .small-title {
+            color: #00d084;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 13px;
+        }
+
+        .contact-heading h1 {
+            font-size: 46px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        .contact-heading p {
+            max-width: 650px;
+            margin: auto;
+            color: #8f9d97;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           MAIN CONTACT CARD
+        ========================== */
+
+        .contact-wrapper {
+            background: #0a100d;
+            border: 1px solid #1b3930;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        /* =========================
+           LEFT CONTACT INFO
+        ========================== */
+
+        .contact-info {
+            background: #0b1210;
+            color: #ffffff;
+            padding: 50px 42px;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid #1b3930;
+        }
+
+        .contact-info::before {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: rgba(0, 208, 132, 0.06);
+            top: -100px;
+            right: -100px;
+        }
+
+        .contact-info::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(0, 208, 132, 0.04);
+            bottom: -90px;
+            left: -70px;
+        }
+
+        .contact-info h2 {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info > p {
+            color: #8f9d97;
+            line-height: 1.7;
+            margin-bottom: 38px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* =========================
+           INFO ITEMS
+        ========================== */
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-icon {
+            min-width: 45px;
+            height: 45px;
+            background: rgba(0, 208, 132, 0.08);
+            border: 1px solid #1b3930;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+            color: #00d084;
+        }
+
+        .info-item h6 {
+            margin: 0 0 5px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .info-item p {
+            margin: 0;
+            color: #8f9d97;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           SOCIAL ICONS
+        ========================== */
+
+        .social-links {
+            margin-top: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-links p {
+            font-size: 14px;
+            margin-bottom: 13px;
+            color: #8f9d97;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #0a100d;
+            border: 1px solid #1b3930;
+            color: #9aa9a3;
+            margin-right: 8px;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: #00d084;
+            border-color: #00d084;
+            color: #050807;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 18px rgba(0, 208, 132, 0.15);
+        }
+
+        /* =========================
+           CONTACT FORM
+        ========================== */
+
+        .contact-form {
+            padding: 50px 45px;
+            background: #0a100d;
+        }
+
+        .contact-form h3 {
+            color: #ffffff;
+            font-size: 27px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-description {
+            color: #8f9d97;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #9aa9a3;
+            margin-bottom: 8px;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #1b3930;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 14px;
+            color: #9aa9a3;
+            background: #0b1210;
+            transition: 0.3s ease;
+        }
+
+        .form-control::placeholder {
+            color: #66756f;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #00d084;
+            box-shadow: 0 0 0 3px rgba(0, 208, 132, 0.08);
+            background: #0b1210;
+            color: #ffffff;
+        }
+
+        .form-select option {
+            background: #0b1210;
+            color: #ffffff;
+        }
+
+        textarea.form-control {
+            min-height: 135px;
+            resize: vertical;
+        }
+
+        /* =========================
+           FLASH MESSAGES
+        ========================== */
+
+        .alert {
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .alert-success {
+            background: rgba(0, 208, 132, 0.10);
+            border: 1px solid #00d084;
+            color: #00d084;
+        }
+
+        .alert-danger {
+            background: rgba(255, 70, 70, 0.10);
+            border: 1px solid #ff4646;
+            color: #ff7070;
+        }
+
+        /* =========================
+           SEND BUTTON
+        ========================== */
+
+        .send-btn {
+            border: none;
+            background: #00d084;
+            color: #050807;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 700;
+            transition: 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background: #00e894;
+            color: #050807;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 208, 132, 0.20);
+        }
+
+        /* =========================
+           BOTTOM CTA
+        ========================== */
+
+        .contact-cta {
+            text-align: center;
+            margin-top: 65px;
+        }
+
+        .contact-cta h3 {
+            font-size: 26px;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .contact-cta p {
+            color: #8f9d97;
+            margin-bottom: 20px;
+        }
+
+        .docmeet-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: transparent;
+            border: 1px solid #1b3930;
+            color: #00d084;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .docmeet-btn:hover {
+            background: #00d084;
+            border-color: #00d084;
+            color: #050807;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 208, 132, 0.15);
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+       
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 991px) {
+
+            .contact-section {
+                padding: 60px 20px 70px;
+            }
+
+            .contact-heading h1 {
+                font-size: 38px;
+            }
+
+            .contact-info {
+                padding: 40px 30px;
+                border-right: none;
+                border-bottom: 1px solid #1b3930;
+            }
+
+            .contact-form {
+                padding: 40px 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            .contact-section {
+                padding: 45px 15px 60px;
+            }
+
+            .contact-heading {
+                margin-bottom: 35px;
+            }
+
+            .contact-heading h1 {
+                font-size: 32px;
+            }
+
+            .contact-heading p {
+                font-size: 15px;
+            }
+
+            .contact-info {
+                padding: 35px 25px;
+            }
+
+            .contact-info h2 {
+                font-size: 26px;
+            }
+
+            .contact-form {
+                padding: 35px 22px;
+            }
+
+            .contact-form h3 {
+                font-size: 24px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    {% include 'navbar.html' %}
+
+
+    <!-- =========================
+         CONTACT SECTION
+    ========================== -->
+
+    <section class="contact-section">
+
+        <div class="container">
+
+            <!-- Heading -->
+
+            <div class="contact-heading">
+
+                <div class="small-title">
+                    Get In Touch
+                </div>
+
+                <h1>We're Here to Help</h1>
+
+                <p>
+                    Have a question, suggestion, or need help with MediSense?
+                    Feel free to reach out to us. Our team is always happy to
+                    hear from you.
+                </p>
+
+            </div>
+
+
+            <!-- Contact Card -->
+
+            <div class="contact-wrapper">
+
+                <div class="row g-0">
+
+                    <!-- =========================
+                         LEFT SIDE
+                    ========================== -->
+
+                    <div class="col-lg-5">
+
+                        <div class="contact-info">
+
+                            <h2>Let's Connect</h2>
+
+                            <p>
+                                Whether you have a question about our services,
+                                need technical assistance, or simply want to
+                                share your feedback, we're here for you.
+                            </p>
+
+
+                            <!-- Email -->
+
+                            <div class="info-item">
+
+                                <div class="info-icon">
+                                    <i class="bi bi-envelope"></i>
+                                </div>
+
+                                <div>
+
+                                    <h6>Email Us</h6>
+
+                                    <p>
+                                        docmeetofficial@gmail.com
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Location -->
+
+                            <div class="info-item">
+
+                                <div class="info-icon">
+                                    <i class="bi bi-geo-alt"></i>
+                                </div>
+
+                                <div>
+
+                                    <h6>Our Location</h6>
+
+                                    <p>
+                                        Delhi, India
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Support -->
+
+                            <div class="info-item">
+
+                                <div class="info-icon">
+                                    <i class="bi bi-clock"></i>
+                                </div>
+
+                                <div>
+
+                                    <h6>Support Hours</h6>
+
+                                    <p>
+                                        Monday – Friday<br>
+                                        9:00 AM – 6:00 PM
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 SOCIAL LINKS
+                            ========================== -->
+
+                            <div class="social-links">
+
+                                <p>Connect With Me</p>
+
+
+                                <!-- LinkedIn -->
+
+                                <a
+                                    href="https://www.linkedin.com/in/ayush-singh-7796572a1/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="social-icon"
+                                    title="LinkedIn"
+                                >
+                                    <i class="bi bi-linkedin"></i>
+                                </a>
+
+
+                                <!-- GitHub -->
+
+                                <a
+                                    href="https://github.com/mrayushsingh08-dot"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="social-icon"
+                                    title="GitHub"
+                                >
+                                    <i class="bi bi-github"></i>
+                                </a>
+
+
+                                <!-- Email -->
+
+                                <a
+                                    href="mailto:ayush4dot@gmail.com"
+                                    class="social-icon"
+                                    title="Email"
+                                >
+                                    <i class="bi bi-envelope"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         RIGHT SIDE
+                    ========================== -->
+
+                    <div class="col-lg-7">
+
+                        <div class="contact-form">
+
+                            <h3>Send Us a Message</h3>
+
+                            <p class="form-description">
+                                Fill out the form below and we'll get back to you
+                                as soon as possible.
+                            </p>
+
+
+                            <!-- Flash Messages -->
+
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                                {% if messages %}
+
+                                    {% for category, message in messages %}
+
+                                        {% if category == "success" %}
+
+                                            <div class="alert alert-success">
+                                                <i class="bi bi-check-circle me-2"></i>
+                                                {{ message }}
+                                            </div>
+
+                                        {% else %}
+
+                                            <div class="alert alert-danger">
+                                                <i class="bi bi-exclamation-circle me-2"></i>
+                                                {{ message }}
+                                            </div>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                {% endif %}
+
+                            {% endwith %}
+
+
+                            <!-- Contact Form -->
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('contact') }}"
+                            >
+
+                                <!-- Name -->
+
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label">
+                                            Full Name
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            class="form-control"
+                                            placeholder="Enter your name"
+                                            required
+                                        >
+
+                                    </div>
+
+
+                                    <!-- Email -->
+
+                                    <div class="col-md-6 mb-3">
+
+                                        <label class="form-label">
+                                            Email Address
+                                        </label>
+
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            class="form-control"
+                                            placeholder="Enter your email"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Subject -->
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+                                        Subject
+                                    </label>
+
+                                    <select
+                                        name="subject"
+                                        class="form-select"
+                                        required
+                                    >
+
+                                        <option selected disabled value="">
+                                            Select a subject
+                                        </option>
+
+                                        <option value="General Query">
+                                            General Query
+                                        </option>
+
+                                        <option value="Technical Support">
+                                            Technical Support
+                                        </option>
+
+                                        <option value="Feedback">
+                                            Feedback
+                                        </option>
+
+                                        <option value="Partnership">
+                                            Partnership
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- Message -->
+
+                                <div class="mb-4">
+
+                                    <label class="form-label">
+                                        Your Message
+                                    </label>
+
+                                    <textarea
+                                        name="message"
+                                        class="form-control"
+                                        placeholder="Write your message here..."
+                                        required
+                                    ></textarea>
+
+                                </div>
+
+
+                                <!-- Button -->
+
+                                <button
+                                    type="submit"
+                                    class="send-btn"
+                                >
+
+                                    Send Message
+
+                                    <i class="bi bi-arrow-right ms-2"></i>
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 DOCMEET CTA
+            ========================== -->
+
+            <div class="contact-cta">
+
+                <h3>Looking for Online Healthcare?</h3>
+
+                <p>
+                    Connect with DocMeet for a convenient healthcare experience.
+                </p>
+
+                <a
+                    href="https://docmeet-healthcare.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="docmeet-btn"
+                >
+
+                    Connect with DocMeet
+
+                    <i class="bi bi-arrow-up-right ms-1"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    {% include 'footer.html' %}
+
+    <!-- Bootstrap JS -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+</body>
+
+</html>

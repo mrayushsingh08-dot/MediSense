@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>About - MediSense</title>
+
+    <!-- Bootstrap -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='bootstrap.min.css') }}"
+    >
+
+   <style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #050807;
+        color: #9aa9a3;
+    }
+
+    
+    /* HERO */
+
+    .hero {
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        padding: 70px 0;
+
+        background:
+            radial-gradient(
+                circle at 75% 45%,
+                rgba(0, 208, 132, 0.08),
+                transparent 35%
+            ),
+            #050807;
+    }
+
+    .hero-content h1 {
+        font-size: 54px;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 18px;
+        line-height: 1.15;
+    }
+
+    .hero-content h1 span {
+        color: #00d084;
+    }
+
+    .hero-content p {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #8f9d97;
+        max-width: 620px;
+    }
+
+    .hero-btn {
+        display: inline-block;
+        margin-top: 18px;
+        padding: 13px 28px;
+        border-radius: 30px;
+        background: #00d084;
+        color: #050807;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s;
+    }
+
+    .hero-btn:hover {
+        background: #00b872;
+        color: #050807;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 208, 132, 0.25);
+    }
+
+    .hero-image {
+        width: 100%;
+        max-width: 560px;
+        display: block;
+        margin: auto;
+    }
+
+    /* SECTION */
+
+    .section {
+        padding: 75px 0;
+        background: #050807;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+        font-size: 36px;
+        font-weight: 750;
+        color: #ffffff;
+    }
+
+    .section-title p {
+        color: #8f9d97;
+        max-width: 700px;
+        margin: 12px auto;
+        line-height: 1.7;
+    }
+
+    /* FEATURE CARDS */
+
+    .info-card {
+        background: #0b1210;
+        border-radius: 18px;
+        padding: 30px;
+        height: 100%;
+        border: 1px solid #1b3930;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        transition: 0.3s;
+    }
+
+    .info-card:hover {
+        transform: translateY(-7px);
+        border-color: #00d084;
+        box-shadow:
+            0 14px 30px rgba(0, 0, 0, 0.35),
+            0 0 20px rgba(0, 208, 132, 0.08);
+    }
+
+    .card-icon {
+        width: 55px;
+        height: 55px;
+        border-radius: 14px;
+
+        background: rgba(0, 208, 132, 0.10);
+        border: 1px solid #1b3930;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 27px;
+        margin-bottom: 20px;
+    }
+
+    .info-card h4 {
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 12px;
+    }
+
+    .info-card p {
+        color: #8f9d97;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+
+    /* HOW IT WORKS */
+
+    .steps-section {
+        background: #0a100d;
+        border-top: 1px solid #1b3930;
+        border-bottom: 1px solid #1b3930;
+    }
+
+    .step {
+        text-align: center;
+        padding: 25px;
+    }
+
+    .step-number {
+        width: 55px;
+        height: 55px;
+
+        margin: 0 auto 18px;
+
+        border-radius: 50%;
+
+        background: rgba(0, 208, 132, 0.10);
+        border: 1px solid #00d084;
+
+        color: #00d084;
+
+        font-size: 22px;
+        font-weight: 700;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .step h5 {
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .step p {
+        color: #8f9d97;
+        line-height: 1.6;
+    }
+
+    /* DISEASE SECTION */
+
+    .disease-section {
+        background: #050807;
+    }
+
+    .disease-card {
+        background: #0b1210;
+
+        padding: 22px;
+
+        border-radius: 15px;
+
+        margin-bottom: 20px;
+
+        border: 1px solid #1b3930;
+        border-left: 4px solid #00d084;
+
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.25);
+
+        transition: 0.3s;
+    }
+
+    .disease-card:hover {
+        border-color: #00d084;
+        transform: translateX(4px);
+    }
+
+    .disease-card h5 {
+        color: #ffffff;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .disease-card p {
+        margin: 0;
+        color: #8f9d97;
+        line-height: 1.6;
+    }
+
+    /* MISSION */
+
+    .mission {
+        background:
+            radial-gradient(
+                circle at 80% 20%,
+                rgba(0, 208, 132, 0.10),
+                transparent 35%
+            ),
+            #0a100d;
+
+        color: #ffffff;
+
+        border: 1px solid #1b3930;
+        border-radius: 25px;
+
+        padding: 55px;
+
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .mission h2 {
+        font-weight: 750;
+        margin-bottom: 18px;
+        color: #ffffff;
+    }
+
+    .mission p {
+        color: #9aa9a3;
+        line-height: 1.8;
+        font-size: 17px;
+    }
+
+    /* DISCLAIMER */
+
+    .disclaimer {
+        background: #0b1210;
+
+        border: 1px solid #1b3930;
+        border-left: 4px solid #00d084;
+
+        border-radius: 15px;
+
+        padding: 25px;
+    }
+
+    .disclaimer h5 {
+        color: #00d084;
+        font-weight: 700;
+    }
+
+    .disclaimer p {
+        margin: 0;
+        color: #8f9d97;
+        line-height: 1.7;
+    }
+
+    /* FOOTER */
+
+    
+
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+        .hero {
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 40px;
+        }
+
+        .hero-content p {
+            margin: auto;
+        }
+
+        .hero-image {
+            margin-top: 40px;
+        }
+
+        .mission {
+            padding: 30px;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<!-- NAVBAR -->
+{% include 'navbar.html' %}
+
+<!-- HERO -->
+<section class="hero">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-6 hero-content">
+
+                <h1>
+                    Smarter Healthcare with
+                    <span>MediSense</span>
+                </h1>
+
+                <p>
+                    MediSense is an AI-based healthcare platform designed
+                    to help users understand their symptoms and get
+                    intelligent health-related recommendations using
+                    machine learning.
+                </p>
+
+                <p>
+                    Our goal is to make preliminary health information
+                    easier to understand by combining technology,
+                    medical knowledge and artificial intelligence.
+                </p>
+
+                <a href="/" class="hero-btn">
+                    Explore MediSense →
+                </a>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <!-- Your image -->
+                <img
+                    src="{{ url_for('static', filename='imgi.png') }}"
+                    alt="AI Healthcare"
+                    class="hero-image"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- WHAT IS MEDISENSE -->
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>What is MediSense?</h2>
+
+            <p>
+                MediSense is a personalized AI-powered healthcare
+                recommendation system that analyzes user-provided
+                symptoms and provides an initial prediction of
+                possible health conditions.
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="info-card">
+
+                    <div class="card-icon">🤖</div>
+
+                    <h4>AI Powered</h4>
+
+                    <p>
+                        Machine learning helps analyze symptom patterns
+                        and generate possible disease predictions.
+                    </p>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="info-card">
+
+                    <div class="card-icon">🩺</div>
+
+                    <h4>Healthcare Focused</h4>
+
+                    <p>
+                        MediSense focuses on healthcare information,
+                        symptoms, diseases and basic health guidance.
+                    </p>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="info-card">
+
+                    <div class="card-icon">⚡</div>
+
+                    <h4>Simple & Fast</h4>
+
+                    <p>
+                        Users can enter their symptoms and receive
+                        an easy-to-understand result through a simple
+                        web interface.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="section steps-section">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>How MediSense Works</h2>
+
+            <p>
+                The system follows a simple process to transform
+                symptoms into useful preliminary health information.
+            </p>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="step">
+
+                    <div class="step-number">1</div>
+
+                    <h5>Enter Symptoms</h5>
+
+                    <p>
+                        Select or enter the symptoms you are experiencing.
+                    </p>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="step">
+
+                    <div class="step-number">2</div>
+
+                    <h5>AI Analysis</h5>
+
+                    <p>
+                        The machine learning model processes the
+                        selected symptoms.
+                    </p>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="step">
+
+                    <div class="step-number">3</div>
+
+                    <h5>Prediction</h5>
+
+                    <p>
+                        MediSense identifies possible health conditions
+                        based on learned patterns.
+                    </p>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="step">
+
+                    <div class="step-number">4</div>
+
+                    <h5>Health Information</h5>
+
+                    <p>
+                        Users receive useful information to better
+                        understand their possible condition.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DISEASE SECTION -->
+<section class="section disease-section">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Explore Health Conditions</h2>
+
+            <p>
+                MediSense can work with symptom patterns related to
+                different types of health conditions.
+            </p>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="disease-card">
+                    <h5>🫁 Respiratory Conditions</h5>
+                    <p>
+                        Symptoms such as cough, breathing difficulty,
+                        congestion and related respiratory indicators.
+                    </p>
+                </div>
+
+                <div class="disease-card">
+                    <h5>🧠 Neurological Conditions</h5>
+                    <p>
+                        Health conditions associated with symptoms such
+                        as headache, dizziness and neurological changes.
+                    </p>
+                </div>
+
+                <div class="disease-card">
+                    <h5>❤️ Cardiovascular Conditions</h5>
+                    <p>
+                        Symptoms and patterns related to cardiovascular
+                        health and general heart-related conditions.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <div class="disease-card">
+                    <h5>🦠 Infections & Fever</h5>
+                    <p>
+                        Symptoms including fever, fatigue, body pain
+                        and other infection-related indicators.
+                    </p>
+                </div>
+
+                <div class="disease-card">
+                    <h5>🧴 Skin Conditions</h5>
+                    <p>
+                        Common symptom patterns involving skin changes,
+                        itching, rashes and related conditions.
+                    </p>
+                </div>
+
+                <div class="disease-card">
+                    <h5>🩺 General Health Conditions</h5>
+                    <p>
+                        A broad range of symptoms can be analyzed to
+                        provide preliminary health recommendations.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MISSION -->
+<section class="section">
+
+    <div class="container">
+
+        <div class="mission">
+
+            <h2>Our Mission</h2>
+
+            <p>
+                MediSense aims to bring artificial intelligence closer
+                to everyday healthcare. The platform is designed to
+                make health-related information more accessible,
+                understandable and convenient for users.
+            </p>
+
+            <p>
+                Instead of replacing medical professionals, MediSense
+                acts as an initial information and awareness tool that
+                can help users understand their symptoms before seeking
+                professional medical advice.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DISCLAIMER -->
+<section class="section pt-0">
+
+    <div class="container">
+
+        <div class="disclaimer">
+
+            <h5 style="color: #FFA500;">⚠ Important Healthcare Disclaimer</h5>
+
+            <p>
+                MediSense provides AI-generated preliminary information
+                for educational and awareness purposes only. It is not
+                a substitute for professional medical diagnosis,
+                treatment or consultation. Always consult a qualified
+                healthcare professional for medical advice and before
+                making healthcare decisions.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+{% include 'footer.html' %}
+
+
+<script
+    src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}">
+</script>
+
+</body>
+</html>

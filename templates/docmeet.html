@@ -1,0 +1,973 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DocMeet</title>
+
+    <!-- Bootstrap -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='bootstrap.min.css') }}"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+         margin: 0;
+        background: #050807;
+        color: #ffffff;
+      }
+
+        /* ================= NAVBAR ================= */
+
+        
+        /* ================= HERO ================= */
+
+        .about-hero {
+            padding: 80px 0 70px;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(0, 208, 132, 0.08),
+                    transparent 35%
+                ),
+                #050807;
+        }
+
+        .hero-content {
+            padding: 25px 20px 25px 0;
+        }
+
+        .small-heading {
+            display: inline-block;
+            background: #0b1210;
+            color: #00d084;
+            border: 1px solid #1b3930;
+            padding: 8px 17px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            line-height: 1.15;
+            font-weight: 750;
+            color: #ffffff;
+            margin-bottom: 22px;
+        }
+
+        .hero-title span {
+            color: #00d084;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #9aa9a3;
+            max-width: 650px;
+            margin-bottom: 30px;
+        }
+
+        .connect-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #00d084;
+            color: #050807;
+            padding: 13px 27px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(0, 208, 132, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .connect-btn:hover {
+            color: #050807;
+            background: #00b875;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0, 208, 132, 0.20);
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 570px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 20px;
+        }
+
+        /* ================= COMMON ================= */
+
+        .section {
+            padding: 75px 0;
+            background: #050807;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 55px;
+            height: 3px;
+            background: #00d084;
+            margin: 15px auto 0;
+            border-radius: 10px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #8f9d97;
+            max-width: 720px;
+            margin: 0 auto 45px;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* ================= ABOUT ================= */
+
+        .about-content {
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .about-content p {
+            color: #9aa9a3;
+            font-size: 17px;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            background: #0a100d;
+            border-left: 4px solid #00d084;
+            border-top: 1px solid #1b3930;
+            border-right: 1px solid #1b3930;
+            border-bottom: 1px solid #1b3930;
+            padding: 25px 28px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: #9aa9a3;
+            font-weight: 500;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features-section {
+            background: #050807;
+        }
+
+        .feature-card {
+            height: 100%;
+            padding: 30px 25px;
+            background: #0b1210;
+            border: 1px solid #1b3930;
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(0, 208, 132, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: #00d084;
+            box-shadow: 0 12px 30px rgba(0, 208, 132, 0.08);
+        }
+
+        .feature-icon {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: #0a100d;
+            border: 1px solid #1b3930;
+            color: #00d084;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h4 {
+            font-size: 20px;
+            font-weight: 650;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #8f9d97;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* ================= HOW IT WORKS ================= */
+
+        .how-section {
+            background: #050807;
+        }
+
+        .step-card {
+            position: relative;
+            padding: 30px 25px;
+            background: #0a100d;
+            border-radius: 15px;
+            border: 1px solid #1b3930;
+            height: 100%;
+            transition: 0.3s ease;
+        }
+
+        .step-card:hover {
+            border-color: #00d084;
+            transform: translateY(-4px);
+        }
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #00d084;
+            color: #050807;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .step-card h4 {
+            color: #ffffff;
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .step-card p {
+            color: #8f9d97;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* ================= TECHNOLOGY ================= */
+
+        .technology-section {
+            background: #050807;
+        }
+
+        .tech-box {
+            text-align: center;
+            padding: 25px 15px;
+            background: #0b1210;
+            border: 1px solid #1b3930;
+            border-radius: 12px;
+            height: 100%;
+            transition: 0.3s ease;
+        }
+
+        .tech-box:hover {
+            border-color: #00d084;
+            transform: translateY(-3px);
+        }
+
+        .tech-box h5 {
+            color: #ffffff;
+            font-weight: 650;
+            margin-bottom: 8px;
+        }
+
+        .tech-box p {
+            color: #8f9d97;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta-section {
+            padding: 75px 0;
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(0, 208, 132, 0.08),
+                    transparent 55%
+                ),
+                #0a100d;
+            border-top: 1px solid #1b3930;
+            border-bottom: 1px solid #1b3930;
+        }
+
+        .cta-box {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .cta-box h2 {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .cta-box p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+            color: #9aa9a3;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #00d084;
+            color: #050807;
+            padding: 13px 28px;
+            border-radius: 9px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .cta-btn:hover {
+            background: #00b875;
+            color: #050807;
+            transform: translateY(-2px);
+        }
+
+        
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 991px) {
+
+            .hero-title {
+                font-size: 40px;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .image-container {
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            .about-hero {
+                padding: 55px 0;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 55px 0;
+            }
+
+            .section-title {
+                font-size: 29px;
+            }
+
+            .cta-box h2 {
+                font-size: 30px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    {% include 'navbar.html' %}
+
+
+    <!-- ================= HERO / ABOUT INTRO ================= -->
+
+    <section class="about-hero">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-6">
+
+                    <div class="hero-content">
+
+                        <span class="small-heading">
+                            About DocMeet
+                        </span>
+
+                        <h1 class="hero-title">
+
+                            Technology That Makes
+
+                            <span>Healthcare Simpler</span>
+
+                        </h1>
+
+                        <p class="hero-description">
+
+                            DocMeet is a modern healthcare platform designed
+                            to make doctor consultations more accessible,
+                            convenient and user-friendly. It brings patients
+                            and doctors together through a single digital
+                            platform.
+
+                        </p>
+
+                        <p class="hero-description">
+
+                            From finding the right doctor to managing
+                            consultations, appointments and online
+                            healthcare services, DocMeet focuses on creating
+                            a smooth digital healthcare experience.
+
+                        </p>
+
+                        <a
+                            href="https://docmeet-healthcare.vercel.app/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="connect-btn"
+                        >
+                            Connect with DocMeet
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-6">
+
+                    <div class="image-container">
+
+                        <img
+                            src="{{ url_for('static', filename='image.png') }}"
+                            alt="Healthcare Technology Illustration"
+                            class="hero-image"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+  
+
+    <!-- ================= FEATURES ================= -->
+
+    <section class="section features-section">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                What DocMeet Offers
+            </h2>
+
+            <p class="section-subtitle">
+
+                The platform provides different features for both patients
+                and doctors to make the consultation process easier.
+
+            </p>
+
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            01
+                        </div>
+
+                        <h4>Doctor Discovery</h4>
+
+                        <p>
+
+                            Patients can explore verified doctors and find
+                            healthcare professionals according to their
+                            required specialty.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            02
+                        </div>
+
+                        <h4>Online Consultation</h4>
+
+                        <p>
+
+                            DocMeet supports digital doctor-patient
+                            consultations, making healthcare interaction
+                            possible without requiring a physical visit.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            03
+                        </div>
+
+                        <h4>Appointment Management</h4>
+
+                        <p>
+
+                            Users can manage consultation-related
+                            appointments through a centralized digital
+                            platform.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            04
+                        </div>
+
+                        <h4>Secure Authentication</h4>
+
+                        <p>
+
+                            User authentication and role-based access help
+                            provide different experiences for patients,
+                            doctors and administrators.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            05
+                        </div>
+
+                        <h4>Doctor Verification</h4>
+
+                        <p>
+
+                            Doctor onboarding includes a verification
+                            process so that approved doctors can become
+                            available to patients.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            06
+                        </div>
+
+                        <h4>Digital Healthcare Experience</h4>
+
+                        <p>
+
+                            The platform brings multiple healthcare
+                            activities together in one modern and
+                            easy-to-use environment.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= HOW IT WORKS ================= -->
+
+    <section class="section how-section">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                How DocMeet Works
+            </h2>
+
+            <p class="section-subtitle">
+
+                A simple digital flow designed to make healthcare
+                consultation easier for users.
+
+            </p>
+
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-3">
+
+                    <div class="step-card">
+
+                        <div class="step-number">
+                            1
+                        </div>
+
+                        <h4>Create an Account</h4>
+
+                        <p>
+
+                            Users can create an account and access the
+                            platform according to their role.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-3">
+
+                    <div class="step-card">
+
+                        <div class="step-number">
+                            2
+                        </div>
+
+                        <h4>Find a Doctor</h4>
+
+                        <p>
+
+                            Patients can explore available doctors and
+                            choose a suitable healthcare professional.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-3">
+
+                    <div class="step-card">
+
+                        <div class="step-number">
+                            3
+                        </div>
+
+                        <h4>Book Consultation</h4>
+
+                        <p>
+
+                            Patients can proceed with the consultation
+                            process through the platform.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-3">
+
+                    <div class="step-card">
+
+                        <div class="step-number">
+                            4
+                        </div>
+
+                        <h4>Consult Online</h4>
+
+                        <p>
+
+                            Patients and doctors can interact through the
+                            digital consultation system.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= TECHNOLOGY ================= -->
+
+    <section class="section technology-section">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                Built With Modern Technology
+            </h2>
+
+            <p class="section-subtitle">
+
+                DocMeet uses modern web development technologies to create
+                a scalable and responsive healthcare application.
+
+            </p>
+
+            <div class="row g-4">
+
+                <div class="col-6 col-md-4 col-lg-3">
+
+                    <div class="tech-box">
+
+                        <h5>Next.js</h5>
+
+                        <p>
+                            Modern React-based framework
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-4 col-lg-3">
+
+                    <div class="tech-box">
+
+                        <h5>React</h5>
+
+                        <p>
+                            Interactive user interface
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-4 col-lg-3">
+
+                    <div class="tech-box">
+
+                        <h5>Tailwind CSS</h5>
+
+                        <p>
+                            Responsive and modern styling
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-4 col-lg-3">
+
+                    <div class="tech-box">
+
+                        <h5>PostgreSQL</h5>
+
+                        <p>
+                            Reliable database system
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-4 col-lg-3">
+
+                    <div class="tech-box">
+
+                        <h5>Prisma</h5>
+
+                        <p>
+                            Database ORM and data access
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-4 col-lg-3">
+
+                    <div class="tech-box">
+
+                        <h5>Clerk</h5>
+
+                        <p>
+                            Authentication and user management
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-4 col-lg-3">
+
+                    <div class="tech-box">
+
+                        <h5>Vonage</h5>
+
+                        <p>
+                            Video communication
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-4 col-lg-3">
+
+                    <div class="tech-box">
+
+                        <h5>Vercel</h5>
+
+                        <p>
+                            Application deployment
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CTA ================= -->
+
+    <section class="cta-section">
+
+        <div class="container">
+
+            <div class="cta-box">
+
+                <h2>
+                    Experience DocMeet
+                </h2>
+
+                <p>
+
+                    Explore the live DocMeet platform and experience how
+                    modern technology can simplify the digital healthcare
+                    consultation process.
+
+                </p>
+
+                <a
+                    href="https://docmeet-healthcare.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cta-btn"
+                >
+                    Connect with DocMeet
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    {% include 'footer.html' %}
+
+
+    <!-- Bootstrap JS -->
+
+    <script
+        src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}">
+    </script>
+
+</body>
+
+</html>
